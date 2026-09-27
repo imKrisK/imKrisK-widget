@@ -1,4 +1,5 @@
 import { detectRecruiterTypeFixed } from '@/lib/recruiter-prompts-fixed';
+import { detectRecruiterTypeFT0Direct, getFT0DirectSystemPrompt } from '@/lib/ft0-direct-prompts';
 import {
   detectConversationMode,
   checkAbuseLimit,
@@ -13,7 +14,6 @@ import {
   checkInjectionRateLimit,
 } from '@/lib/chat-injection-prevention';
 import { parseMarkdownResponse } from '@/lib/response-formatter';
-import { validateResponse } from '@/lib/response-validator';
 
 /**
  * FT0 Chat API Route with Ollama Support
@@ -109,26 +109,30 @@ export async function POST(req: Request) {
     // Log cost for monitoring (server-side only)
     console.log(`[Cost Tracking] ConversationID: ${conversationId}, Mode: ${conversationMode}, Tokens: ${estimatedTokens}, Cost: $${estimatedCost.toFixed(6)}`);
 
-    // Detect recruiter type from keywords
-    const recruiterProfile = detectRecruiterTypeFixed(userText);
+    // Detect recruiter type from user message (using DIRECT prompts for better Ollama compatibility)
+    const recruiterType = detectRecruiterTypeFT0Direct(userText);
+    const systemPrompt = getFT0DirectSystemPrompt(recruiterType);
 
-    // Build messages array with system prompt
-    const systemMessage = {
-      role: 'system' as const,
-      content: recruiterProfile.systemPrompt,
-    };
+    // For Ollama: Inject system prompt into first user message instead of using system role
+    // (deepseek-r1 doesn't respect system role well)
+    const userMessagesOnly = messages.map((msg: any) => ({
+      role: msg.role,
+      content: typeof msg.content === 'string' ? msg.content : msg.content[0]?.text || '',
+    }));
 
-    // Prepare messages for API call
-    const apiMessages = [
-      systemMessage,
-      ...messages.map((msg: any) => ({
-        role: msg.role,
-        content: typeof msg.content === 'string' ? msg.content : msg.content[0]?.text || '',
-      })),
-    ];
+    // Inject system prompt into first user message
+    if (userMessagesOnly.length > 0 && userMessagesOnly[0].role === 'user') {
+      userMessagesOnly[0].content = systemPrompt + '\n\n' + userMessagesOnly[0].content;
+    } else {
+      // If no user messages yet, create one with just the prompt + instruction
+      userMessagesOnly.unshift({
+        role: 'user',
+        content: systemPrompt + '\n\nQuestion: ' + userText,
+      });
+    }
 
     // Call AI model with Ollama as primary (ZERO COST)
-    const response = await callAIModel(apiMessages, recruiterProfile.type);
+    const response = await callAIModel(userMessagesOnly, recruiterType);
 
     if (!response.ok) {
       console.error('AI model error:', response.statusText);
@@ -140,9 +144,8 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    // Validate response and use fallback if model failed
+    // Get raw response - now let's trust Ollama with the honest prompts
     let rawResponse = data.content || data.message || 'No response generated';
-    rawResponse = validateResponse(rawResponse, recruiterProfile.type);
     
     // Try to parse structured response
     let structuredResponse = null;
@@ -168,7 +171,7 @@ export async function POST(req: Request) {
     return Response.json({
       response: rawResponse,
       structuredResponse: structuredResponse,
-      recruiterType: recruiterProfile.type,
+      recruiterType: recruiterType,
       conversationId,
       model: data.model || 'ollama-deepseek-r1:7b',
       conversationMode,
