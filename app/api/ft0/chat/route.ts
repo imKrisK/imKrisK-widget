@@ -1,4 +1,4 @@
-import { detectRecruiterTypeStructured } from '@/lib/recruiter-prompts-structured';
+import { detectRecruiterTypeFixed } from '@/lib/recruiter-prompts-fixed';
 import {
   detectConversationMode,
   checkAbuseLimit,
@@ -13,6 +13,7 @@ import {
   checkInjectionRateLimit,
 } from '@/lib/chat-injection-prevention';
 import { parseMarkdownResponse } from '@/lib/response-formatter';
+import { validateResponse } from '@/lib/response-validator';
 
 /**
  * FT0 Chat API Route with Ollama Support
@@ -109,7 +110,7 @@ export async function POST(req: Request) {
     console.log(`[Cost Tracking] ConversationID: ${conversationId}, Mode: ${conversationMode}, Tokens: ${estimatedTokens}, Cost: $${estimatedCost.toFixed(6)}`);
 
     // Detect recruiter type from keywords
-    const recruiterProfile = detectRecruiterTypeStructured(userText);
+    const recruiterProfile = detectRecruiterTypeFixed(userText);
 
     // Build messages array with system prompt
     const systemMessage = {
@@ -139,10 +140,12 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
+    // Validate response and use fallback if model failed
+    let rawResponse = data.content || data.message || 'No response generated';
+    rawResponse = validateResponse(rawResponse, recruiterProfile.type);
+    
     // Try to parse structured response
     let structuredResponse = null;
-    let rawResponse = data.content || data.message || 'No response generated';
-    
     try {
       structuredResponse = JSON.parse(rawResponse);
     } catch (e) {
