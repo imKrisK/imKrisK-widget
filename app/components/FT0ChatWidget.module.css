@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&family=Lora:wght@400;500;600&display=swap');
 
 :root {
-  /* Primary Colors */
-  --color-navy: #1a1f3a;
-  --color-charcoal: #2a2e4a;
+  /* Primary Colors - Softened for eye comfort */
+  --color-navy: #252d48;
+  --color-charcoal: #33394d;
   --color-paper: #f5f3f0;
   
   /* Accent Colors */
