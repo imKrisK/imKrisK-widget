@@ -91,16 +91,22 @@ async function callAIModel(
           ...(githubToken && { 'x-github-token': githubToken }), // Optional GitHub auth
         },
         body: JSON.stringify({
-          messages,
-          recruiterType,
-          model: 'haiku-4.5', // PRIMARY: Haiku 4.5 for cost efficiency
+          messages: messages.filter(msg => msg.role !== 'system').map(msg => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+          model: 'haiku-4.5', // PRIMARY: Haiku 4.5 for cost efficiency (0.33x)
           temperature: 0.7,
           max_tokens: 1024,
         }),
       });
 
       if (response.ok) {
-        return response;
+        const data = await response.json();
+        return Response.json({
+          content: data.content || data.message || 'No response',
+          model: 'haiku-4.5',
+        });
       }
       console.warn('Manifest API failed, trying fallback...');
     } catch (error) {
@@ -119,7 +125,7 @@ async function callAIModel(
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'claude-3-5-haiku-20241022', // FALLBACK: Haiku 4.5 model
+          model: 'claude-3-5-haiku-20241022', // FALLBACK: Haiku 4.5 model (NOT gpt-4o!)
           max_tokens: 1024,
           temperature: 0.7,
           messages: messages.map(msg => ({
