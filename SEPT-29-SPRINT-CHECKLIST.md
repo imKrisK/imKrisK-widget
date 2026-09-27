@@ -27,9 +27,11 @@
   - Widget URL: https://imkrisk-widget-production.up.railway.app
 
 ### Know Your Widget URL & Form Link
-- [ ] Widget URL copied to notepad: ________________________
+- [ ] Widget URL copied to notepad: https://imkrisk-widget-production.up.railway.app
 - [ ] Form link (you'll create it): ________________________
 - [ ] Message templates reviewed (know 3-4 by heart)
+- [ ] Resume saved as: `Kristoffer-Kelly-Operations-Manager.pdf` ✅
+- [ ] Resume location known (desktop/folder) for easy attaching
 
 ---
 
