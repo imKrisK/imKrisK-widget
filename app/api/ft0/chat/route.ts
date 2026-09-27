@@ -14,18 +14,26 @@ import {
 } from '@/lib/chat-injection-prevention';
 
 /**
- * FT0 Chat API Route
+ * FT0 Chat API Route with Ollama Support
  * 
  * Configuration:
- * - Primary: Haiku 4.5 (cost-optimized at $0.80/$2.40 per 1M tokens)
- * - Fallback chain: Manifest API → Claude Haiku
+ * - Primary: Ollama (localhost:11434) - ZERO COST
+ * - Fallback 1: Manifest API with Haiku 4.5 ($0.80/$2.40 per 1M tokens)
+ * - Fallback 2: Claude Haiku API (cost-optimized)
  * - GitHub auth: Personal Access Token (PAT) optional for rate limiting
- * - Cost efficiency: 0.33x vs Claude Sonnet
  * 
  * Abuse Prevention:
  * - "open_to_work" mode: Max 5 questions
  * - "hiring" mode: Max 10 questions
- * - Cost tracking per conversation
+ * - Cost tracking per conversation (Ollama = $0, others tracked)
+ * 
+ * Ollama Models Available:
+ * - deepseek-r1:7b (recommended - 7.6B reasoning, 4.6GB)
+ * - qwen2.5:32b (powerful - 32.8B parameters, 19.8GB)
+ * - llama3.2:3b (lightweight - 3.2B, 2.0GB)
+ * - qwen:latest (compact - 4B, 2.3GB)
+ * - llava:7b (vision-capable - 7B, 4.7GB)
+ * - deepseek-r1:8b (reasoning - 8.2B, 5.2GB)
  */
 export async function POST(req: Request) {
   try {
@@ -117,7 +125,7 @@ export async function POST(req: Request) {
       })),
     ];
 
-    // Call AI model with Haiku 4.5 as primary (cost-optimized)
+    // Call AI model with Ollama as primary (ZERO COST)
     const response = await callAIModel(apiMessages, recruiterProfile.type);
 
     if (!response.ok) {
@@ -134,7 +142,7 @@ export async function POST(req: Request) {
       response: data.content || data.message || 'No response generated',
       recruiterType: recruiterProfile.type,
       conversationId,
-      model: data.model || 'haiku-4.5', // Track which model was used
+      model: data.model || 'ollama-deepseek-r1:7b',
       conversationMode,
       questionCount: abuseCheck.questionCount,
       remainingQuestions: abuseCheck.remainingQuestions,
@@ -157,7 +165,41 @@ async function callAIModel(
   const claudeApiKey = process.env.CLAUDE_API_KEY;
   const githubToken = process.env.GITHUB_TOKEN;
 
-  // Primary: Try Manifest API with Haiku 4.5 (cost-optimized)
+  // ========== PRIMARY: Try Ollama (ZERO COST, local) ==========
+  // Ollama runs on http://localhost:11434 by default
+  // Models available: deepseek-r1:7b (recommended), qwen2.5:32b, llama3.2:3b, qwen:latest, llava:7b, deepseek-r1:8b
+  try {
+    const response = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'deepseek-r1:7b',
+        messages: messages.map(msg => ({
+          role: msg.role,
+          content: msg.content,
+        })).filter(msg => msg.role !== 'system'),
+        system: messages.find(msg => msg.role === 'system')?.content || '',
+        temperature: 0.7,
+        stream: false,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('[Ollama] Successfully used local Ollama for response');
+      return Response.json({
+        content: data.message?.content || data.response || 'No response',
+        model: 'ollama-deepseek-r1:7b',
+      });
+    }
+    console.warn('[Ollama] Connection failed, status:', response.status);
+  } catch (error) {
+    console.warn('[Ollama] Not available (expected if not running):', (error as Error).message);
+  }
+
+  // ========== FALLBACK 1: Try Manifest API with Haiku 4.5 ==========
   if (manifestApiKey) {
     try {
       const response = await fetch('https://manifest.conversationmine.ai/api/ft0/chat', {
@@ -165,14 +207,14 @@ async function callAIModel(
         headers: {
           'authorization': `Bearer ${manifestApiKey}`,
           'content-type': 'application/json',
-          ...(githubToken && { 'x-github-token': githubToken }), // Optional GitHub auth
+          ...(githubToken && { 'x-github-token': githubToken }),
         },
         body: JSON.stringify({
           messages: messages.filter(msg => msg.role !== 'system').map(msg => ({
             role: msg.role,
             content: msg.content,
           })),
-          model: 'haiku-4.5', // PRIMARY: Haiku 4.5 for cost efficiency (0.33x)
+          model: 'haiku-4.5',
           temperature: 0.7,
           max_tokens: 1024,
         }),
@@ -180,18 +222,19 @@ async function callAIModel(
 
       if (response.ok) {
         const data = await response.json();
+        console.log('[Manifest API] Successfully used Manifest API');
         return Response.json({
           content: data.content || data.message || 'No response',
-          model: 'haiku-4.5',
+          model: 'manifest-haiku-4.5',
         });
       }
-      console.warn('Manifest API failed, trying fallback...');
+      console.warn('[Manifest API] Failed, status:', response.status);
     } catch (error) {
-      console.warn('Manifest API error:', error);
+      console.warn('[Manifest API] Error:', (error as Error).message);
     }
   }
 
-  // Fallback: Claude API with Haiku 4.5 (cost-optimized)
+  // ========== FALLBACK 2: Claude API with Haiku 4.5 ==========
   if (claudeApiKey) {
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -202,7 +245,7 @@ async function callAIModel(
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'claude-3-5-haiku-20241022', // FALLBACK: Haiku 4.5 model (NOT gpt-4o!)
+          model: 'claude-3-5-haiku-20241022',
           max_tokens: 1024,
           temperature: 0.7,
           messages: messages.map(msg => ({
@@ -215,21 +258,33 @@ async function callAIModel(
 
       if (response.ok) {
         const data = await response.json();
+        console.log('[Claude API] Successfully used Claude API');
         return Response.json({
           content: data.content[0]?.text || 'No response',
-          model: 'haiku-4.5-claude',
+          model: 'claude-haiku-4.5',
         });
       }
     } catch (error) {
-      console.error('Claude fallback error:', error);
+      console.error('[Claude API] Error:', (error as Error).message);
     }
   }
 
-  // No API keys configured
+  // ========== NO API AVAILABLE ==========
   return Response.json(
     {
       content:
-        'I need to be configured to respond. Please set MANIFEST_API_KEY or CLAUDE_API_KEY in your environment variables. Using Haiku 4.5 (cost: $0.80/$2.40 per 1M tokens).',
+        'I need to be configured to respond.\n\n' +
+        '🏠 LOCAL DEVELOPMENT:\n' +
+        '  1. Start Ollama: `ollama serve`\n' +
+        '  2. Pull a model: `ollama pull deepseek-r1:7b`\n' +
+        '  3. Reload the widget\n\n' +
+        '☁️ PRODUCTION (Railway):\n' +
+        '  Set MANIFEST_API_KEY or CLAUDE_API_KEY in environment variables\n\n' +
+        '📊 COST COMPARISON:\n' +
+        '  • Ollama (local): $0.00 ✅\n' +
+        '  • Manifest API: $0.00-0.41/month\n' +
+        '  • Claude API: $0.00-0.41/month\n\n' +
+        '❓ Questions? Visit: https://github.com/imKrisK/imKrisK-widget',
     },
     { status: 200 }
   );
