@@ -51,13 +51,16 @@ export default function FT0ChatWidget() {
     setError('');
 
     try {
+      // Include the new user message in the API call
+      const updatedMessages = [...messages, userMessage];
+      
       const response = await fetch('/api/ft0/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: messages.map(m => ({
+          messages: updatedMessages.map(m => ({
             role: m.role,
             content: m.content,
           })),
