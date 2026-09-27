@@ -14,6 +14,7 @@ import {
   checkInjectionRateLimit,
 } from '@/lib/chat-injection-prevention';
 import { parseMarkdownResponse } from '@/lib/response-formatter';
+import { isArchitectureQuestion, getArchitectureBoundaryResponse } from '@/lib/architecture-boundary';
 
 /**
  * FT0 Chat API Route with Ollama Support
@@ -108,6 +109,22 @@ export async function POST(req: Request) {
 
     // Log cost for monitoring (server-side only)
     console.log(`[Cost Tracking] ConversationID: ${conversationId}, Mode: ${conversationMode}, Tokens: ${estimatedTokens}, Cost: $${estimatedCost.toFixed(6)}`);
+
+    // CHECK: Architecture question - return honest boundary response
+    if (isArchitectureQuestion(userText)) {
+      console.log('[Architecture Boundary] Detected infrastructure/architecture question. Returning honest response.');
+      const boundaryResponse = getArchitectureBoundaryResponse('honest');
+      const structuredResponse = parseMarkdownResponse(boundaryResponse);
+      
+      return Response.json({
+        response: boundaryResponse,
+        structuredResponse: structuredResponse,
+        recruiterType: 'architecture-boundary',
+        conversationId,
+        model: 'ft0-honest-boundary',
+        conversationMode,
+      });
+    }
 
     // Detect recruiter type from user message (using DIRECT prompts for better Ollama compatibility)
     const recruiterType = detectRecruiterTypeFT0Direct(userText);
