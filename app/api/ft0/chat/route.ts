@@ -6,6 +6,12 @@ import {
   calculateConversationCost,
   generateAbuseLimitMessage,
 } from '@/lib/abuse-prevention';
+import {
+  checkChatInjection,
+  generateInjectionBlockedMessage,
+  logInjectionAttempt,
+  checkInjectionRateLimit,
+} from '@/lib/chat-injection-prevention';
 
 /**
  * FT0 Chat API Route
@@ -37,6 +43,36 @@ export async function POST(req: Request) {
     const userText = typeof latestUserMessage.content === 'string'
       ? latestUserMessage.content
       : '';
+
+    // ========== SECURITY: Check for chat injection attempts ==========
+    const injectionCheck = checkChatInjection(userText);
+    if (injectionCheck.isSuspicious) {
+      logInjectionAttempt(conversationId, userText, injectionCheck, 'unknown');
+
+      if (injectionCheck.action === 'block') {
+        // Block high-risk injections completely
+        return Response.json({
+          response: generateInjectionBlockedMessage(injectionCheck),
+          recruiterType: 'system',
+          conversationId,
+          model: 'security',
+          warning: 'injection_attempt_blocked',
+          injectionRiskLevel: injectionCheck.riskLevel,
+        });
+      }
+
+      // Check rate limit (allow 3 injection attempts in 5 minutes)
+      if (checkInjectionRateLimit(conversationId)) {
+        return Response.json({
+          response: 'Multiple suspicious requests detected. For security, this conversation has been paused. Please start a new conversation or contact: https://github.com/imKrisK',
+          recruiterType: 'system',
+          conversationId,
+          model: 'security',
+          warning: 'injection_rate_limit_exceeded',
+        });
+      }
+    }
+    // ===================================================================
 
     // Detect conversation mode (open_to_work vs hiring)
     const conversationMode = detectConversationMode(userText);
