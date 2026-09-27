@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kristoffer Kelly - Operations Manager</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+        h1 {
+            margin: 0 0 8px;
+            font-size: 2.4rem;
+            font-weight: 800;
+        }
+        .title {
+            font-size: 1rem;
+            color: #666;
+            margin: 0 0 12px;
+            font-weight: 500;
+        }
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #2e7d32;
+        }
+        .summary {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .metric {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .metric-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .metric-detail {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin: 0 0 20px;
+            font-weight: 700;
+            color: #333;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        .job {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+        }
+        .job-company {
+            font-size: 0.9rem;
+            color: #666;
+            flex-shrink: 0;
+        }
+        .job-duration {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        ul {
+            margin: 12px 0 0;
+            padding-left: 20px;
+            list-style: none;
+        }
+        li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 0;
+        }
+        li:before {
+            content: "→";
+            position: absolute;
+            left: -18px;
+            color: #999;
+        }
+        .credentials {
+            display: grid;
+            gap: 12px;
+        }
+        .credential {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        .tech-skills {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .skill-area {
+            margin-bottom: 16px;
+        }
+        .skill-area:last-child {
+            margin-bottom: 0;
+        }
+        .skill-area-label {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        .skill-area-items {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        .portfolio-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 0.95rem;
+        }
+        .portfolio-name {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .portfolio-scope {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 24px 16px; }
+            h1 { font-size: 1.8rem; }
+            .job-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="name">Kristoffer Kelly</h1>
+            <p class="title" id="title">Operations Manager | Process Systems | Legal & Compliance</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 12px;">
+                <div id="location">Las Vegas, NV | Open to remote / hybrid</div>
+                <span class="status">Available</span>
+            </div>
+        </header>
+
+        <p class="summary" id="summary">10+ years leading operations teams and building systems that work. I take messy, manual processes and turn them into reliable, auditable workflows. Quiet leader who listens first, moves fast, and delivers results.</p>
+
+        <section class="metrics">
+            <div class="metric">
+                <div class="metric-label">Workflow Improvement</div>
+                <div class="metric-value">72 hours → 5 hours</div>
+                <div class="metric-detail">Rebuilt a legacy legal operations process from the ground up. Cut cycle time by 93% while improving accuracy.</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Scale & Consistency</div>
+                <div class="metric-value">15+ person team</div>
+                <div class="metric-detail">Supervised multi-site team. Maintained 99%+ accuracy on high-volume legal filings and compliance records.</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Professional Experience</h2>
+            
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Operations Manager</div>
+                        <div class="job-company">Portfolio Recovery Associates, LLC</div>
+                    </div>
+                    <div class="job-duration">5+ years</div>
+                </div>
+                <ul>
+                    <li>Supervised 15+ legal staff across two regional locations. Built team from ground up and maintained consistency across both sites.</li>
+                    <li>Designed and implemented SOPs that became department standard. Reduced errors and improved speed on every major workflow.</li>
+                    <li>Handled all legal discovery and filing work—complaints, motions, responses, judgments. Maintained 99%+ accuracy on complex litigation documents.</li>
+                    <li>Built training programs for multi-department teams. Taught 50+ staff members company-wide processes and standards.</li>
+                    <li>Managed large portfolios of accounts. Ensured audit-ready records, accurate reporting, and full regulatory compliance.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Permit & Compliance Specialist</div>
+                        <div class="job-company">CO2 Monitoring LLC</div>
+                    </div>
+                    <div class="job-duration">3 years</div>
+                </div>
+                <ul>
+                    <li>Translated complex government regulations (CERS, Accela, LAFD) into workable compliance steps for the team.</li>
+                    <li>Mapped site boundaries and operational requirements into system records. Built the documentation that made field work possible.</li>
+                    <li>Reduced compliance errors by standardizing workflows and documentation across all projects.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Credentials & Training</h2>
+            <div class="credentials">
+                <div class="credential">Certified Software Engineering Professional (UNLV / Institute of Data)</div>
+                <div class="credential">Specialized Certificate in Unix System Administration (UCSD)</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technical Skills</h2>
+            <div class="tech-skills">
+                <div class="skill-area">
+                    <div class="skill-area-label">Systems & Scripting</div>
+                    <div class="skill-area-items">TypeScript, Next.js, React, Bash, Unix systems, SQL</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Portfolio</h2>
+            <div class="portfolio">
+                <div class="portfolio-item">
+                    <div class="portfolio-name">Legal Operations & Workflow Design</div>
+                    <div class="portfolio-scope">Portfolio Recovery Associates</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-name">Compliance & Municipal Permitting Systems</div>
+                    <div class="portfolio-scope">CO2 Monitoring LLC</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-name">Systems Integration & Automation</div>
+                    <div class="portfolio-scope">Open source & internal tools</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>This is my resume. I am open to work.</p>
+        </footer>
+    </div>
+
+    <script>
+        async function init() {
+            try {
+                const response = await fetch('./telemetry-safe.json');
+                const data = await response.json();
+                
+                if (data.profile) {
+                    document.getElementById('name').textContent = data.profile.name;
+                    document.getElementById('title').textContent = data.profile.title;
+                    document.getElementById('summary').textContent = data.profile.summary;
+                    document.getElementById('location').textContent = data.profile.location;
+                }
+            } catch (e) {
+                console.error('Failed to load data:', e);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

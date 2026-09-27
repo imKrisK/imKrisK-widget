@@ -1,0 +1,15 @@
+name = "imkrisk-widget"
+type = "javascript"
+main = ".wrangler/tmp/bundle-5ec0eb16-dc24-483d-bbab-1e64e8bb2de5/index.js"
+compatibility_date = "2024-09-26"
+
+[build]
+command = "npm run build"
+cwd = "./"
+destination = ".next/standalone"
+
+[build.upload]
+format = "service-worker"
+
+[site]
+bucket = "public"

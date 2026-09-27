@@ -1,0 +1,43 @@
+name: widget-safe-validation
+
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'telemetry-safe.json'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'telemetry-safe.json'
+
+jobs:
+  validate-widget:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate telemetry-safe.json
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('telemetry-safe.json')
+          data = json.loads(p.read_text())
+          assert isinstance(data.get('profile'), dict), 'profile missing'
+          assert isinstance(data.get('velocity_metrics'), list), 'velocity_metrics missing'
+          assert isinstance(data.get('nodes'), list), 'nodes missing'
+          print('telemetry-safe.json validated')
+          PY
+
+      - name: Validate no hostile route strings in static widget payload
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          content = (Path('index.html').read_text() + '\n' + Path('telemetry-safe.json').read_text()).lower()
+          forbidden = ['/admin-metrics', 'http://', 'https://']
+          bad = [item for item in forbidden if item in content]
+          if bad:
+              raise SystemExit(f'Forbidden routes or external URLs detected: {bad}')
+          print('static widget content validated')
+          PY
