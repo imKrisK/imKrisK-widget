@@ -2,11 +2,13 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './FT0ChatWidget.module.css';
+import StructuredResponse from './StructuredResponse';
 
 interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  structuredContent?: any;
   timestamp: Date;
   recruiterType?: string;
 }
@@ -78,6 +80,7 @@ export default function FT0ChatWidget() {
         id: Math.random().toString(36).substring(7),
         role: 'assistant',
         content: data.response,
+        structuredContent: data.structuredResponse,
         timestamp: new Date(),
         recruiterType: data.recruiterType,
       };
@@ -108,7 +111,11 @@ export default function FT0ChatWidget() {
             className={`${styles.message} ${styles[message.role]}`}
           >
             <div className={styles.messageContent}>
-              <p>{message.content}</p>
+              {message.structuredContent ? (
+                <StructuredResponse data={message.structuredContent} />
+              ) : (
+                <p>{message.content}</p>
+              )}
               {message.recruiterType && (
                 <span className={styles.recruiterTag}>
                   Profile: {message.recruiterType}

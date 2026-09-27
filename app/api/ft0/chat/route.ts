@@ -1,4 +1,4 @@
-import { detectRecruiterType } from '@/lib/recruiter-prompts';
+import { detectRecruiterTypeStructured } from '@/lib/recruiter-prompts-structured';
 import {
   detectConversationMode,
   checkAbuseLimit,
@@ -12,6 +12,7 @@ import {
   logInjectionAttempt,
   checkInjectionRateLimit,
 } from '@/lib/chat-injection-prevention';
+import { parseMarkdownResponse } from '@/lib/response-formatter';
 
 /**
  * FT0 Chat API Route with Ollama Support
@@ -108,7 +109,7 @@ export async function POST(req: Request) {
     console.log(`[Cost Tracking] ConversationID: ${conversationId}, Mode: ${conversationMode}, Tokens: ${estimatedTokens}, Cost: $${estimatedCost.toFixed(6)}`);
 
     // Detect recruiter type from keywords
-    const recruiterProfile = detectRecruiterType(userText);
+    const recruiterProfile = detectRecruiterTypeStructured(userText);
 
     // Build messages array with system prompt
     const systemMessage = {
@@ -138,8 +139,32 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
+    // Try to parse structured response
+    let structuredResponse = null;
+    let rawResponse = data.content || data.message || 'No response generated';
+    
+    try {
+      structuredResponse = JSON.parse(rawResponse);
+    } catch (e) {
+      // If not valid JSON, try to extract JSON from text
+      const jsonMatch = rawResponse.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          structuredResponse = JSON.parse(jsonMatch[0]);
+        } catch (e2) {
+          // JSON parsing failed, use fallback formatter to parse markdown/text response
+          console.log('[Fallback] Using markdown formatter for response');
+          structuredResponse = parseMarkdownResponse(rawResponse);
+        }
+      } else {
+        // No JSON found, use fallback formatter
+        structuredResponse = parseMarkdownResponse(rawResponse);
+      }
+    }
+
     return Response.json({
-      response: data.content || data.message || 'No response generated',
+      response: rawResponse,
+      structuredResponse: structuredResponse,
       recruiterType: recruiterProfile.type,
       conversationId,
       model: data.model || 'ollama-deepseek-r1:7b',
