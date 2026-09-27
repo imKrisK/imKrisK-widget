@@ -1,4 +1,11 @@
 import { detectRecruiterType } from '@/lib/recruiter-prompts';
+import {
+  detectConversationMode,
+  checkAbuseLimit,
+  estimateTokens,
+  calculateConversationCost,
+  generateAbuseLimitMessage,
+} from '@/lib/abuse-prevention';
 
 /**
  * FT0 Chat API Route
@@ -8,6 +15,11 @@ import { detectRecruiterType } from '@/lib/recruiter-prompts';
  * - Fallback chain: Manifest API → Claude Haiku
  * - GitHub auth: Personal Access Token (PAT) optional for rate limiting
  * - Cost efficiency: 0.33x vs Claude Sonnet
+ * 
+ * Abuse Prevention:
+ * - "open_to_work" mode: Max 5 questions
+ * - "hiring" mode: Max 10 questions
+ * - Cost tracking per conversation
  */
 export async function POST(req: Request) {
   try {
@@ -25,6 +37,31 @@ export async function POST(req: Request) {
     const userText = typeof latestUserMessage.content === 'string'
       ? latestUserMessage.content
       : '';
+
+    // Detect conversation mode (open_to_work vs hiring)
+    const conversationMode = detectConversationMode(userText);
+
+    // Check abuse limits
+    const abuseCheck = checkAbuseLimit(messages, conversationMode);
+    if (!abuseCheck.allowed) {
+      // Return friendly error message with contact options
+      return Response.json({
+        response: generateAbuseLimitMessage(abuseCheck),
+        recruiterType: 'system',
+        conversationId,
+        model: 'haiku-4.5',
+        warning: 'conversation_limit_reached',
+        questionCount: abuseCheck.questionCount,
+        conversationMode: abuseCheck.mode,
+      });
+    }
+
+    // Estimate token usage for cost tracking
+    const estimatedTokens = estimateTokens(messages);
+    const estimatedCost = calculateConversationCost(estimatedTokens);
+
+    // Log cost for monitoring (server-side only)
+    console.log(`[Cost Tracking] ConversationID: ${conversationId}, Mode: ${conversationMode}, Tokens: ${estimatedTokens}, Cost: $${estimatedCost.toFixed(6)}`);
 
     // Detect recruiter type from keywords
     const recruiterProfile = detectRecruiterType(userText);
@@ -62,6 +99,10 @@ export async function POST(req: Request) {
       recruiterType: recruiterProfile.type,
       conversationId,
       model: data.model || 'haiku-4.5', // Track which model was used
+      conversationMode,
+      questionCount: abuseCheck.questionCount,
+      remainingQuestions: abuseCheck.remainingQuestions,
+      estimatedCost: estimatedCost.toFixed(6),
     });
   } catch (error) {
     console.error('Chat API error:', error);
