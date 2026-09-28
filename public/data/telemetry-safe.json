@@ -1,56 +1,111 @@
 {
   "profile": {
     "name": "Kristoffer Kelly",
-    "title": "Operations Manager | Process Systems | Legal & Compliance",
-    "location": "Las Vegas, NV | Open to remote / hybrid",
-    "summary": "10+ years leading operations teams and building systems that work. I take messy, manual processes and turn them into reliable, auditable workflows. Quiet leader who listens first, moves fast, and delivers results."
+    "title": "Technical Operations Manager | 10+ Years Business Operations Leadership",
+    "location": "San Diego, CA | Open to remote / hybrid / in-office",
+    "summary": "Results-driven Technical Operations Manager with 10+ years of verified experience managing high-volume legal data processing, compliance workflows, and complex operational systems. Combines deep domain knowledge in legal e-filing platforms and regulatory compliance with hands-on technical skills in systems automation. Proven capability to analyze operational bottlenecks, design scalable automation solutions, and deliver measurable velocity improvements."
   },
   "velocity_metrics": [
     {
-      "label": "Workflow Improvement",
-      "value": "72 hours down to 5 hours",
-      "detail": "Rebuilt a legacy legal operations process from the ground up. Cut cycle time by 93% while improving accuracy."
+      "label": "Operational Velocity",
+      "value": "72 hours → 5 hours",
+      "detail": "Compressed a 72-hour human management workflow into a 5-hour automated runtime loop. 14.4x improvement in processing velocity while maintaining 99%+ accuracy."
     },
     {
-      "label": "Scale & Consistency",
-      "value": "Multi-site team leadership",
-      "detail": "Supervised 15+ staff across regional locations. Maintained 99%+ accuracy on high-volume legal filings and compliance records."
+      "label": "Team & Scale Leadership",
+      "value": "0 → 15+ people",
+      "detail": "Scaled operations team from zero while managing high-volume case processing across multiple sites. Maintained 99%+ accuracy on 1000+ simultaneous legal files."
+    },
+    {
+      "label": "Shipped Technical Achievement",
+      "value": "ACIL on VS Code Marketplace",
+      "detail": "Designed and deployed client-side developer utility enforcing API cost governance. Proven capability in advanced token management, pre-execution controls, and shipped software deployment."
     }
   ],
   "portfolio": [
-    {"name": "Legal Operations & Workflow Design", "scope": "Portfolio Recovery Associates"},
-    {"name": "Compliance & Municipal Permitting Systems", "scope": "CO2 Monitoring LLC"},
-    {"name": "Systems Integration & Automation", "scope": "TypeScript, Bash scripting, local tools"}
+    {
+      "name": "ACIL Extension Gatekeeper",
+      "scope": "VS Code Marketplace (Published) - API Cost Governance & Token Management"
+    },
+    {
+      "name": "Legal Operations & Workflow Automation",
+      "scope": "Portfolio Recovery Associates - 72-hour → 5-hour automation, 1000+ case processing"
+    },
+    {
+      "name": "Regulatory Compliance Systems",
+      "scope": "CO2 Monitoring LLC - Multi-jurisdictional portal integration (eFileCA, eFileNV, CERS, Accela, LAFD)"
+    },
+    {
+      "name": "ConversationMine.ai Framework",
+      "scope": "Multi-platform testing environment, multi-agent coordination, data rendering"
+    }
   ],
   "experience": {
     "operations": [
       {
-        "role": "Operations Manager",
-        "company": "Portfolio Recovery Associates, LLC",
-        "duration": "5+ years",
+        "role": "Research Associate",
+        "company": "RDSolutions",
+        "duration": "January 2025 – January 2026",
         "bullets": [
-          "Supervised 15+ legal staff across two regional locations. Built team from ground up and maintained consistency across both sites.",
-          "Designed and implemented SOPs that became department standard. Reduced errors and improved speed on every major workflow.",
-          "Handled all legal discovery and filing work—complaints, motions, responses, judgments. Maintained 99%+ accuracy on complex litigation documents.",
-          "Built training programs for multi-department teams. Taught 50+ staff members company-wide processes and standards.",
-          "Managed large portfolios of accounts. Ensured audit-ready records, accurate reporting, and full regulatory compliance."
+          "Designed and deployed diagnostic utilities to securely capture, validate, and sync field operations data into centralized repositories.",
+          "Automated pipeline operations validation checks across tracking databases, reducing data errors and cross-functional workflow delays.",
+          "Established data governance protocols ensuring accuracy across decentralized operations."
         ]
       },
       {
         "role": "Permit & Compliance Specialist",
         "company": "CO2 Monitoring LLC",
-        "duration": "3 years",
+        "duration": "March 2021 – October 2023",
         "bullets": [
-          "Translated complex government regulations (CERS, Accela, LAFD) into workable compliance steps for the team.",
-          "Mapped site boundaries and operational requirements into system records. Built the documentation that made field work possible.",
+          "Engineered compliance pipeline system integrating 4+ multi-jurisdictional government portals (eFileNV, CERS, Accela, LAFD CUPA).",
+          "Translated complex regulatory requirements into step-by-step digital workflows, enabling high-volume permit submissions.",
+          "Managed 100+ approved permits and high-value portal submissions, maintaining 100% compliance accuracy.",
           "Reduced compliance errors by standardizing workflows and documentation across all projects."
+        ]
+      },
+      {
+        "role": "Operations Manager",
+        "company": "Portfolio Recovery Associates, LLC",
+        "duration": "February 2014 – February 2021",
+        "bullets": [
+          "Spearheaded daily operations of high-volume QLAW case management platform, processing 1000+ simultaneous legal files.",
+          "Audited legacy workflows and systematically automated manual batching, printing, and tracking—compressing 72-hour cycles into 5-hour automation loops.",
+          "Supervised multi-disciplinary paralegal teams (internal & outsourced), maintaining absolute data integrity across thousands of legal summons and complaint files.",
+          "Scaled operations team from 0→15+ people while maintaining service quality and team development.",
+          "Handled all legal discovery and filing work—complaints, motions, responses, judgments. Maintained 99%+ accuracy on complex litigation documents."
         ]
       }
     ],
     "technical": [
       {
-        "area": "Core Skills",
-        "items": "TypeScript, Next.js, React, Bash scripting, Unix systems, SQL"
+        "area": "Languages & Frameworks",
+        "items": "TypeScript, JavaScript (ES6+), React, Next.js 15, Node.js, Tailwind CSS, HTML5/CSS3"
+      },
+      {
+        "area": "Systems & Automation",
+        "items": "Linux/Unix Administration, Bash/Shell Scripting, VS Code Extension API, data validation pipelines"
+      },
+      {
+        "area": "Legal & Compliance Platforms",
+        "items": "Odyssey, Rapid Legal, Q-Law, CERS, Accela, eFileCA, eFileNV, LAFD CUPA"
+      },
+      {
+        "area": "Data & Visualization",
+        "items": "Recharts, relational databases, data validation pipelines, Arduino hardware integration"
+      }
+    ]
+  },
+  "education": {
+    "certifications": [
+      {
+        "title": "Certified Software Engineering Professional (CSEP)",
+        "institution": "UNLV / Institute of Data",
+        "year": "2025"
+      },
+      {
+        "title": "Specialized Certificate in Unix System Administration",
+        "institution": "University of California, San Diego",
+        "year": "2013"
       }
     ]
   }
