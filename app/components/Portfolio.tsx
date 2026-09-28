@@ -24,6 +24,8 @@ interface ProfileData {
       role: string;
       company: string;
       duration: string;
+      companyContext?: string;
+      companyLanguage?: string;
       bullets: string[];
     }>;
     technical: Array<{
@@ -127,6 +129,16 @@ export default function Portfolio() {
                     <span className={styles.company}>{exp.company}</span>
                   </div>
                   <p className={styles.duration}>{exp.duration}</p>
+                  {exp.companyContext && (
+                    <div className={styles.companyContext}>
+                      <p className={styles.contextLabel}>{exp.companyContext}</p>
+                    </div>
+                  )}
+                  {exp.companyLanguage && (
+                    <div className={styles.companyLanguage}>
+                      <p>{exp.companyLanguage}</p>
+                    </div>
+                  )}
                   <ul className={styles.bullets}>
                     {exp.bullets.map((bullet, bidx) => (
                       <li key={bidx}>{bullet}</li>
