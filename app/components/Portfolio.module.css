@@ -1,11 +1,11 @@
-/* Calligraphy & Ink Theme - Portfolio Component */
+/* Calligraphy & Ink Theme - Light Warm Variant (Portfolio) */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&family=Lora:wght@400;500;600&display=swap');
 
 :root {
-  /* Primary Colors - Softened for eye comfort */
-  --color-navy: #252d48;
-  --color-charcoal: #33394d;
-  --color-paper: #f5f3f0;
+  /* Primary Colors - Light Warm Background */
+  --color-navy: #faf7f3;
+  --color-charcoal: #f3f0eb;
+  --color-paper: #2d2a25;
   
   /* Accent Colors */
   --color-rose-gold: #c99a7f;
@@ -13,8 +13,8 @@
   --color-gold-dust: #d4a574;
   
   /* Neutral Colors */
-  --color-cream: #ede9e0;
-  --color-grey: #a89a8f;
+  --color-cream: #3a342f;
+  --color-grey: #8b7d75;
   --color-ink: #1a1a1a;
   
   /* Typography */
@@ -65,7 +65,7 @@
 .header {
   padding: 48px 20px;
   border-bottom: 1px solid rgba(201, 154, 127, 0.15);
-  background: linear-gradient(180deg, rgba(26, 31, 58, 0.9), rgba(26, 31, 58, 0.5));
+  background: linear-gradient(180deg, rgba(250, 247, 243, 0.95), rgba(250, 247, 243, 0.8));
   position: relative;
 }
 
@@ -164,7 +164,7 @@
 
 .metricCard {
   padding: 28px;
-  background: rgba(42, 46, 74, 0.4);
+  background: rgba(243, 240, 235, 0.6);
   border: 1px solid rgba(201, 154, 127, 0.2);
   border-left: 3px solid var(--color-rose-gold);
   border-radius: 2px;
@@ -174,7 +174,7 @@
 
 .metricCard:hover {
   border-color: rgba(201, 154, 127, 0.4);
-  box-shadow: 0 8px 20px rgba(201, 154, 127, 0.08);
+  box-shadow: 0 8px 20px rgba(201, 154, 127, 0.12);
 }
 
 .metricLabel {
@@ -282,7 +282,7 @@
 .experienceCard {
   padding: 28px;
   margin-bottom: 24px;
-  background: rgba(42, 46, 74, 0.35);
+  background: rgba(243, 240, 235, 0.4);
   border: 1px solid rgba(201, 154, 127, 0.15);
   border-left: 3px solid var(--color-rose-gold);
   border-radius: 2px;
@@ -290,7 +290,7 @@
 }
 
 .experienceCard:hover {
-  background: rgba(42, 46, 74, 0.5);
+  background: rgba(243, 240, 235, 0.6);
   border-left-color: var(--color-gold-dust);
 }
 
@@ -361,7 +361,7 @@
 
 .skillCard {
   padding: 22px;
-  background: rgba(42, 46, 74, 0.35);
+  background: rgba(243, 240, 235, 0.5);
   border: 1px solid rgba(201, 154, 127, 0.2);
   border-radius: 2px;
   transition: all 200ms ease-in-out;
@@ -369,7 +369,7 @@
 
 .skillCard:hover {
   border-color: var(--color-rose-gold);
-  box-shadow: 0 4px 12px rgba(201, 154, 127, 0.08);
+  box-shadow: 0 4px 12px rgba(201, 154, 127, 0.1);
 }
 
 .skillCard h3 {
@@ -395,14 +395,14 @@
 
 .projectCard {
   padding: 22px;
-  background: rgba(42, 46, 74, 0.35);
+  background: rgba(243, 240, 235, 0.4);
   border: 1px solid rgba(201, 154, 127, 0.15);
   border-radius: 2px;
   transition: all 200ms ease-in-out;
 }
 
 .projectCard:hover {
-  background: rgba(42, 46, 74, 0.5);
+  background: rgba(243, 240, 235, 0.6);
   border-color: var(--color-rose-gold);
 }
 
@@ -427,7 +427,7 @@
   text-align: center;
   color: var(--color-grey);
   font-size: 0.9em;
-  background: rgba(26, 31, 58, 0.6);
+  background: rgba(250, 247, 243, 0.6);
   font-family: var(--font-body);
   font-style: italic;
   opacity: 0.9;
