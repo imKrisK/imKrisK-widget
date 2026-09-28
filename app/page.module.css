@@ -41,8 +41,8 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-navy) 100%);
-  border-left: 1px solid rgba(201, 154, 127, 0.15);
+  background: linear-gradient(135deg, #2a2520 0%, #3a342f 100%);
+  border-left: 1px solid rgba(201, 154, 127, 0.3);
   overflow-y: auto;
 }
 

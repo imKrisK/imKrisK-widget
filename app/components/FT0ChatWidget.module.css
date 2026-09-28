@@ -12,16 +12,16 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: linear-gradient(135deg, #faf7f3 0%, #f3f0eb 100%);
+  background: linear-gradient(135deg, #2a2520 0%, #3a342f 100%);
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(45, 42, 37, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .header {
   padding: 24px 20px;
-  background: linear-gradient(180deg, rgba(45, 42, 37, 0.08) 0%, transparent 100%);
-  border-bottom: 1px solid rgba(201, 154, 127, 0.15);
+  background: linear-gradient(180deg, rgba(60, 54, 49, 0.8) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(201, 154, 127, 0.25);
 }
 
 .headerContent {
@@ -48,14 +48,14 @@
   font-family: "Playfair Display", Georgia, serif;
   font-size: 1.2em;
   font-weight: 700;
-  color: #2d2a25;
+  color: #f5f3f0;
   margin: 0;
   letter-spacing: 0.3px;
 }
 
 .subtitle {
   font-size: 0.85em;
-  color: #8b7d75;
+  color: #a89a8f;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   margin: 0;
   text-transform: uppercase;
@@ -116,10 +116,10 @@
 }
 
 .messageFT0 .messageContent {
-  background: rgba(243, 240, 235, 0.7);
-  border: 1px solid rgba(201, 154, 127, 0.15);
+  background: rgba(60, 54, 49, 0.7);
+  border: 1px solid rgba(201, 154, 127, 0.3);
   border-left: 3px solid #c99a7f;
-  color: #2d2a25;
+  color: #e8e4dd;
 }
 
 .messageFT0 .messageContent p {
@@ -161,8 +161,8 @@
 
 .inputContainer {
   padding: 16px 20px;
-  background: linear-gradient(180deg, transparent 0%, rgba(45, 42, 37, 0.04) 100%);
-  border-top: 1px solid rgba(201, 154, 127, 0.15);
+  background: linear-gradient(180deg, transparent 0%, rgba(60, 54, 49, 0.6) 100%);
+  border-top: 1px solid rgba(201, 154, 127, 0.25);
 }
 
 .inputWrapper {
@@ -174,10 +174,10 @@
 .input {
   flex: 1;
   padding: 12px 14px;
-  border: 1px solid rgba(201, 154, 127, 0.2);
+  border: 1px solid rgba(201, 154, 127, 0.3);
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.8);
-  color: #2d2a25;
+  background: rgba(50, 44, 38, 0.8);
+  color: #e8e4dd;
   font-family: "Lora", Georgia, serif;
   font-size: 0.95em;
   resize: none;
@@ -189,8 +189,8 @@
 .input:focus {
   outline: none;
   border-color: #c99a7f;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(201, 154, 127, 0.1);
+  background: rgba(60, 54, 49, 0.9);
+  box-shadow: 0 0 0 3px rgba(201, 154, 127, 0.2);
 }
 
 .input::placeholder {
