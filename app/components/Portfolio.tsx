@@ -56,9 +56,13 @@ interface ProfileData {
   };
 }
 
-export default function Portfolio() {
+interface Props {
+  profileType?: 'operations' | 'technical';
+}
+
+export default function Portfolio({ profileType = 'operations' }: Props) {
   const [data, setData] = useState<ProfileData | null>(null);
-  const [activeTab, setActiveTab] = useState('business');
+  const [activeTab, setActiveTab] = useState(profileType === 'technical' ? 'innovation' : 'business');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

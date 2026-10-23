@@ -13,12 +13,20 @@ interface Message {
   recruiterType?: string;
 }
 
-export default function FT0ChatWidget() {
+interface FT0Props {
+  profileType?: 'operations' | 'technical';
+}
+
+export default function FT0ChatWidget({ profileType = 'operations' }: FT0Props) {
+  const initialMessage = profileType === 'technical'
+    ? 'Hi! I\'m FT0, an AI trained on Kristoffer\'s technical background and innovation work. Ask me about AI systems, software architecture, open-source projects, patents, or technical leadership. I\'ll provide detailed technical insights.'
+    : 'Hi! I\'m FT0, an AI assistant trained on Kristoffer\'s background. Ask me about his operations experience, technical skills, or leadership approach. I\'ll tailor my responses based on what matters to you.';
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
       role: 'assistant',
-      content: 'Hi! I\'m FT0, an AI assistant trained on Kristoffer\'s background. Ask me about his operations experience, technical skills, or leadership approach. I\'ll tailor my responses based on what matters to you.',
+      content: initialMessage,
       timestamp: new Date().toISOString(),
     },
   ]);
