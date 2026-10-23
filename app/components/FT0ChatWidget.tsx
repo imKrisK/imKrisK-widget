@@ -9,7 +9,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   structuredContent?: any;
-  timestamp: Date;
+  timestamp: string;
   recruiterType?: string;
 }
 
@@ -19,7 +19,7 @@ export default function FT0ChatWidget() {
       id: '0',
       role: 'assistant',
       content: 'Hi! I\'m FT0, an AI assistant trained on Kristoffer\'s background. Ask me about his operations experience, technical skills, or leadership approach. I\'ll tailor my responses based on what matters to you.',
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     },
   ]);
   const [input, setInput] = useState('');
@@ -44,7 +44,7 @@ export default function FT0ChatWidget() {
       id: Math.random().toString(36).substring(7),
       role: 'user',
       content: input,
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -81,7 +81,7 @@ export default function FT0ChatWidget() {
         role: 'assistant',
         content: data.response,
         structuredContent: data.structuredResponse,
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
         recruiterType: data.recruiterType,
       };
 
@@ -123,7 +123,7 @@ export default function FT0ChatWidget() {
               )}
             </div>
             <span className={styles.timestamp}>
-              {message.timestamp.toLocaleTimeString([], {
+              {new Date(message.timestamp).toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit',
               })}

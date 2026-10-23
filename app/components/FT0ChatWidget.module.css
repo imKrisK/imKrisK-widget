@@ -357,3 +357,53 @@
     font-size: 16px;
   }
 }
+
+/* Enhanced Mobile Responsiveness for FT0 */
+@media (max-width: 1200px) {
+  .widget {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .widget {
+    border-radius: 0;
+    min-height: 600px;
+  }
+
+  .messages {
+    padding: 16px;
+  }
+
+  .input {
+    min-height: 44px;
+  }
+
+  .sendButton {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .widget {
+    min-height: 100vh;
+  }
+
+  .messages {
+    max-height: 60vh;
+  }
+}
+
+/* Improve touch targets */
+@media (hover: none) and (pointer: coarse) {
+  .sendButton,
+  .input {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .input {
+    font-size: 16px;
+  }
+}
