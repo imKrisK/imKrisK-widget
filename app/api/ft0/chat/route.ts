@@ -215,36 +215,40 @@ async function callAIModel(
 
   // ========== PRIMARY: Try Ollama (ZERO COST, local) ==========
   // Ollama runs on http://localhost:11434 by default
-  // Models available: deepseek-r1:7b (recommended), qwen2.5:32b, llama3.2:3b, qwen:latest, llava:7b, deepseek-r1:8b
-  try {
-    const response = await fetch('http://localhost:11434/api/chat', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'deepseek-r1:7b',
-        messages: messages.map(msg => ({
-          role: msg.role,
-          content: msg.content,
-        })).filter(msg => msg.role !== 'system'),
-        system: messages.find(msg => msg.role === 'system')?.content || '',
-        temperature: 0.7,
-        stream: false,
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('[Ollama] Successfully used local Ollama for response');
-      return Response.json({
-        content: data.message?.content || data.response || 'No response',
-        model: 'ollama-deepseek-r1:7b',
+  // Models available: qwen2.5:32b (PRIMARY - best quality), deepseek-r1:7b, llama3.2:3b, qwen:latest, llava:7b, deepseek-r1:8b
+  const ollamaModels = ['qwen2.5:32b', 'deepseek-r1:7b']; // Try Qwen2.5 first (better quality)
+  
+  for (const model of ollamaModels) {
+    try {
+      const response = await fetch('http://localhost:11434/api/chat', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: messages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+          })).filter(msg => msg.role !== 'system'),
+          system: messages.find(msg => msg.role === 'system')?.content || '',
+          temperature: 0.7,
+          stream: false,
+        }),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`[Ollama] Successfully used local Ollama (${model}) for response`);
+        return Response.json({
+          content: data.message?.content || data.response || 'No response',
+          model: `ollama-${model}`,
+        });
+      }
+      console.warn(`[Ollama] ${model} failed, status:`, response.status);
+    } catch (error) {
+      console.warn(`[Ollama] ${model} not available:`, (error as Error).message);
     }
-    console.warn('[Ollama] Connection failed, status:', response.status);
-  } catch (error) {
-    console.warn('[Ollama] Not available (expected if not running):', (error as Error).message);
   }
 
   // ========== FALLBACK 1: Try Manifest API with Haiku 4.5 ==========
