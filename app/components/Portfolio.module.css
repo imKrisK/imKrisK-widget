@@ -546,3 +546,486 @@
     padding: 20px;
   }
 }
+
+/* New Section Styles for Technical Innovation & AI/ML */
+
+.projectsDetailGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.projectDetailCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(201, 154, 127, 0.2);
+  border-radius: 6px;
+  padding: 28px;
+  transition: all 300ms ease;
+}
+
+.projectDetailCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(201, 154, 127, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.projectDetailCard h3 {
+  margin: 0 0 8px 0;
+  font-family: var(--font-heading);
+  font-size: 1.4em;
+  font-weight: 600;
+  color: var(--color-paper);
+}
+
+.projectTagline {
+  font-size: 1.05em;
+  color: var(--color-rose-gold);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.projectDescription {
+  color: var(--color-grey);
+  line-height: 1.6;
+  margin: 12px 0;
+  font-size: 0.95em;
+}
+
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.techTag {
+  background: rgba(201, 154, 127, 0.15);
+  color: var(--color-copper);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.85em;
+  font-weight: 500;
+  border: 1px solid rgba(201, 154, 127, 0.3);
+  font-family: var(--font-ui);
+}
+
+.projectImpact {
+  color: var(--color-paper);
+  font-size: 0.95em;
+  margin: 16px 0;
+  line-height: 1.5;
+  padding: 12px;
+  background: rgba(201, 154, 127, 0.08);
+  border-left: 3px solid var(--color-rose-gold);
+  border-radius: 2px;
+}
+
+.projectImpact strong {
+  color: var(--color-copper);
+}
+
+.projectLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--color-copper);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95em;
+  transition: all 200ms ease;
+}
+
+.projectLink:hover {
+  color: var(--color-rose-gold);
+  transform: translateX(4px);
+}
+
+.metricsSection {
+  margin-top: 48px;
+}
+
+.metricsCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.metricBox {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(201, 154, 127, 0.15);
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+  transition: all 300ms ease;
+}
+
+.metricBox:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(201, 154, 127, 0.3);
+  transform: translateY(-2px);
+}
+
+.metricNumber {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: var(--color-rose-gold);
+  margin: 0 0 8px 0;
+  font-family: var(--font-heading);
+}
+
+.metricLabel {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: var(--color-paper);
+  margin: 0 0 4px 0;
+}
+
+.metricSub {
+  font-size: 0.85em;
+  color: var(--color-grey);
+  margin: 0;
+}
+
+.capabilitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.capabilityCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(201, 154, 127, 0.15);
+  border-radius: 6px;
+  padding: 24px;
+  transition: all 300ms ease;
+}
+
+.capabilityCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(201, 154, 127, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.capabilityCard h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--color-paper);
+  font-family: var(--font-heading);
+}
+
+.capabilityCard p {
+  color: var(--color-grey);
+  line-height: 1.6;
+  font-size: 0.95em;
+  margin: 0;
+}
+
+.aiNoteSection {
+  background: rgba(201, 154, 127, 0.08);
+  border: 1px solid rgba(201, 154, 127, 0.2);
+  border-radius: 6px;
+  padding: 24px;
+  margin-top: 32px;
+}
+
+.aiNoteSection h3 {
+  margin-top: 0;
+  color: var(--color-paper);
+}
+
+.aiNoteSection p {
+  color: var(--color-grey);
+  line-height: 1.7;
+}
+
+/* Responsive improvements for new sections */
+@media (max-width: 768px) {
+  .projectsDetailGrid {
+    gap: 16px;
+  }
+
+  .projectDetailCard {
+    padding: 20px;
+  }
+
+  .metricsCards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .capabilitiesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .projectDetailCard {
+    padding: 16px;
+  }
+
+  .projectTagline {
+    font-size: 0.95em;
+  }
+
+  .metricsCards {
+    grid-template-columns: 1fr;
+  }
+
+  .metricNumber {
+    font-size: 1.8em;
+  }
+
+  .technologies {
+    gap: 6px;
+  }
+
+  .techTag {
+    font-size: 0.8em;
+    padding: 4px 10px;
+  }
+}
+
+/* Business Operations Narrative Styles */
+.narrativeSection {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color, #3b82f6);
+}
+
+.narrativeSection h2 {
+  font-size: 2em;
+  margin-bottom: 16px;
+  color: var(--primary-color, #3b82f6);
+}
+
+.coverLetter {
+  line-height: 1.8;
+  color: #333;
+}
+
+.coverLetter p {
+  margin-bottom: 12px;
+  font-size: 1em;
+}
+
+.coverLetter p:first-child {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Competencies Section */
+.competenciesSection {
+  margin-bottom: 40px;
+}
+
+.competenciesSection h3 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+.competenciesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.competencyCard {
+  padding: 20px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.competencyCard:hover {
+  border-color: var(--primary-color, #3b82f6);
+  background: #f3f4f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.competencyCard h4 {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  color: var(--primary-color, #3b82f6);
+}
+
+.competencyCard p {
+  font-size: 0.95em;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Career Path Section */
+.careerPathSection {
+  margin-bottom: 40px;
+}
+
+.careerPathSection h3 {
+  font-size: 1.5em;
+  margin-bottom: 24px;
+  color: #1f2937;
+}
+
+.currentRoleCard {
+  padding: 24px;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border-left: 4px solid var(--primary-color, #3b82f6);
+}
+
+.roleMarker {
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--primary-color, #3b82f6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.currentRoleCard h4 {
+  font-size: 1.3em;
+  margin-bottom: 12px;
+}
+
+.currentRoleCard p {
+  font-size: 0.95em;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.progressionArrow {
+  text-align: center;
+  font-size: 1.5em;
+  color: var(--primary-color, #3b82f6);
+  margin: 16px 0;
+}
+
+.progressionSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.progressionCard {
+  padding: 20px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 16px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.progressionCard:hover {
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  background: #f3f4f6;
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color, #3b82f6);
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+.stepContent h4 {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.stepContent p {
+  font-size: 0.9em;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.stepArrow {
+  text-align: center;
+  font-size: 1.2em;
+  color: #d1d5db;
+  margin: 8px 0 -8px 0;
+}
+
+/* CSEP Section */
+.csepSection {
+  margin-bottom: 40px;
+}
+
+.csepSection h3 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+.csepCard {
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  border-left: 4px solid #22c55e;
+}
+
+.csepCard p {
+  font-size: 0.95em;
+  line-height: 1.8;
+  color: #1f2937;
+}
+
+/* Experience History */
+.experienceHistorySection {
+  margin-top: 40px;
+}
+
+.experienceHistorySection h3 {
+  font-size: 1.5em;
+  margin-bottom: 24px;
+  color: #1f2937;
+}
+
+/* Update projectCardLink for Technical Credentials */
+.projectCardLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--primary-color, #3b82f6);
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.projectCardLink:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+.projectNote {
+  margin-top: 8px;
+  font-size: 0.85em;
+  color: var(--primary-color, #3b82f6);
+  font-weight: 600;
+}

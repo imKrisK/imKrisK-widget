@@ -1,43 +1,78 @@
 {
   "profile": {
     "name": "Kristoffer Kelly",
-    "title": "Technical Operations Manager | 10+ Years Business Operations Leadership",
-    "location": "San Diego, CA | Open to remote / hybrid / in-office",
-    "summary": "Results-driven Technical Operations Manager with 10+ years of verified experience managing high-volume legal data processing, compliance workflows, and complex operational systems. Combines deep domain knowledge in legal e-filing platforms and regulatory compliance with hands-on technical skills in systems automation. Proven capability to analyze operational bottlenecks, design scalable automation solutions, and deliver measurable velocity improvements."
+    "title": "Operations Manager | Process Systems | Legal & Compliance",
+    "location": "Las Vegas, NV | Open to remote / hybrid",
+    "summary": "10+ years leading operations teams and building systems that work. I take messy, manual processes and turn them into reliable, auditable workflows. Quiet leader who listens first, moves fast, and delivers results."
   },
-  "velocity_metrics": [
-    {
-      "label": "Operational Velocity",
-      "value": "72 hours → 5 hours",
-      "detail": "Compressed a 72-hour human management workflow into a 5-hour automated runtime loop. 14.4x improvement in processing velocity while maintaining 99%+ accuracy."
+  "business_operations": {
+    "headline": "Building Systems. Leading Teams. Staying to Scale Them.",
+    "cover_letter": "I'm not looking for the exit. I'm looking for the escalator.\n\nFor 10+ years, I've taken messy, manual operations—data entry, compliance workflows, multi-jurisdictional permitting—and turned them into reliable, auditable systems. I've supervised teams, built SOPs that became department standards, and maintained 99%+ accuracy on high-volume legal filings.\n\nMy next chapter: **Data Moderator → Chat Customer Service → Chat Moderator → Chat Developer**. That's not a sprint. That's a 5-10 year commitment to understand your data loop, master it, and build the modern systems that scale it.\n\nWith my CSEP credential, I bring not just operations expertise—I bring a permanent performance upgrade. I'm here to stay and deliver compounding value.",
+    "core_competencies": [
+      {
+        "area": "Workflow & Process Design",
+        "examples": "93% cycle-time reduction, SOP standardization, multi-site consistency"
+      },
+      {
+        "area": "Compliance & Permitting",
+        "examples": "CERS, Accela, LAFD, multi-jurisdictional regulatory navigation, audit-ready documentation"
+      },
+      {
+        "area": "Team Leadership & Scaling",
+        "examples": "Supervised 15+ staff across regional locations, built training programs, maintained 99%+ accuracy"
+      },
+      {
+        "area": "Data & Systems Integration",
+        "examples": "Invoice processing, portfolio management, document control, workflow automation"
+      }
+    ],
+    "career_path": {
+      "current": {
+        "level": "Data Moderator & Operations Foundation",
+        "description": "Master the 30/60/90: Days 1-30 (learn the SOP), Days 31-60 (spot inefficiencies), Days 61-90 (pitch the upgrade). This is ground-level expertise."
+      },
+      "progression": [
+        {
+          "level": "Chat Customer Service",
+          "description": "Move from backend operations to front-line customer interaction. Understand the human loop, not just the workflow."
+        },
+        {
+          "level": "Chat Moderator",
+          "description": "Quality control and content governance. Apply operations discipline to customer experience. Spot patterns, enforce consistency, scale culture."
+        },
+        {
+          "level": "Chat Developer",
+          "description": "Bridge the gap. Automate the moderation layer with the same rigor I've applied to legal operations. Build modern systems for a modern department."
+        }
+      ]
     },
-    {
-      "label": "Team & Scale Leadership",
-      "value": "0 → 15+ people",
-      "detail": "Scaled operations team from zero while managing high-volume case processing across multiple sites. Maintained 99%+ accuracy on 1000+ simultaneous legal files."
-    },
-    {
-      "label": "Shipped Technical Achievement",
-      "value": "ACIL on VS Code Marketplace",
-      "detail": "Designed and deployed client-side developer utility enforcing API cost governance. Proven capability in advanced token management, pre-execution controls, and shipped software deployment."
-    }
-  ],
+    "csep_value": "My CSEP credential isn't a bridge to leave operations—it's a lever to upgrade how we execute it. Combined with 10+ years of hands-on operations, it signals that I'm not a job-hopper. I'm a builder who understands both the business rules and the technical constraints, and I'm committed to fixing what breaks at scale."
+  },
   "portfolio": [
+    {"name": "Legal Operations & Workflow Automation", "scope": "Portfolio Recovery Associates - Office Department Workflow", "isVisualized": true, "description": "Designed automated legal filing and document management systems. 72-hour manual workflow compressed to 5-hour automated runtime. CSEP-driven systems architecture for high-volume case processing (1000+ simultaneous files)."},
+    {"name": "Construction Permit & Compliance", "scope": "CO2 Monitoring LLC - Multi-Jurisdiction Portal Integration", "description": "eFileCA, eFileNV, CERS, Accela, LAFD portal coordination. Managed compliance workflows across California and Nevada jurisdictions."}
+  ],
+  "technical_projects": [
     {
-      "name": "ACIL Extension Gatekeeper",
-      "scope": "VS Code Marketplace (Published) - API Cost Governance & Token Management"
+      "name": "🎯 ABSOLUTE-ZERO: Live Decision Engine",
+      "tagline": "Real-time operational decision intelligence",
+      "description": "Multi-layer decision framework integrating operational data streams with real-time analytics. Processes high-volume workflows with intelligent routing and automated escalation. Built with systems architecture principles (CSEP foundation).",
+      "technologies": ["TypeScript", "Real-time Data Processing", "Decision Logic Engine", "Workflow Orchestration"],
+      "impact": "Enables instant decision-making on complex operational scenarios at scale"
     },
     {
-      "name": "Legal Operations & Workflow Automation",
-      "scope": "Portfolio Recovery Associates - 72-hour → 5-hour automation, 1000+ case processing"
+      "name": "FT0 Widget",
+      "tagline": "AI-powered recruiter assistant with profile context awareness",
+      "description": "Conversational AI interface trained on professional background. Adapts responses based on recruiter type (operations vs technical). Demonstrates advanced state management, real-time API integration, and personalized content delivery.",
+      "technologies": ["React", "TypeScript", "AI/LLM Integration", "State Management", "localStorage"],
+      "impact": "Showcases technical capability in UI/UX design and conversational AI"
     },
     {
-      "name": "Regulatory Compliance Systems",
-      "scope": "CO2 Monitoring LLC - Multi-jurisdictional portal integration (eFileCA, eFileNV, CERS, Accela, LAFD)"
-    },
-    {
-      "name": "ConversationMine.ai Framework",
-      "scope": "Multi-platform testing environment, multi-agent coordination, data rendering"
+      "name": "ACIL Extension",
+      "tagline": "API Cost Governance & Token Management",
+      "description": "VS Code Marketplace extension enforcing API cost governance. Client-side developer utility with advanced token management, pre-execution controls, and deployment validation. Shipped production software.",
+      "technologies": ["TypeScript", "VS Code API", "Token Management", "Pre-execution Controls"],
+      "impact": "Published on VS Code Marketplace - demonstrates shipped software capability"
     }
   ],
   "experience": {
@@ -45,76 +80,41 @@
       {
         "role": "Research Associate",
         "company": "RDSolutions",
-        "duration": "January 2025 – January 2026",
-        "companyContext": "Price Intelligence & Market Data Operations",
-        "companyLanguage": "Rapid field research operations. 1000-item assignments, fixed $14/item, 5-hour sprint completion cycles.",
+        "duration": "Jan 2025 - Jan 2026",
         "bullets": [
-          "Designed and deployed diagnostic utilities to securely capture, validate, and sync field operations data (shelf prices, SKU verification) into centralized repositories.",
-          "Engineered 5-hour sprint completion cycles across distributed research associates—data validation pipeline ensuring accuracy on time-sensitive price collection from major retailers (WinCo, Kroger, Costco, La Bonita).",
-          "Automated data pipeline validation checks reducing data errors and cross-functional workflow delays during high-velocity research operations.",
-          "Established data governance protocols ensuring 100% accuracy compliance across decentralized field operations and point-of-sale data collection."
-        ]
-      },
-      {
-        "role": "Permit & Compliance Specialist",
-        "company": "CO2 Monitoring LLC",
-        "duration": "March 2021 – October 2023",
-        "companyContext": "Environmental Compliance & Regulatory Portal Systems",
-        "companyLanguage": "Multi-jurisdictional portal integration. 4+ government systems. Scale-ready compliance automation.",
-        "bullets": [
-          "Engineered compliance pipeline system integrating 4+ multi-jurisdictional government portals (eFileNV, CERS, Accela, LAFD CUPA)—enabling unified regulatory submission workflows.",
-          "Translated complex environmental regulatory requirements into step-by-step digital workflows, enabling high-volume permit submissions across California and Nevada jurisdictions.",
-          "Managed 100+ approved permits and high-value portal submissions (permit scaling 400% via automated workflows), maintaining 100% compliance accuracy across all submissions.",
-          "Reduced compliance errors by 95% by standardizing workflows, documentation standards, and cross-jurisdiction filing procedures across all environmental projects.",
-          "Scaled operations velocity: designed systems to handle exponential permit growth, demonstrating 4x throughput improvement before organizational capacity constraints."
+          "Collected and validated data from mobile applications and POS systems for market research campaigns.",
+          "Analyzed product workflows and technical implementation details for competitive analysis.",
+          "Documented findings for client reporting and strategic planning."
         ]
       },
       {
         "role": "Operations Manager",
         "company": "Portfolio Recovery Associates, LLC",
-        "duration": "February 2014 – February 2021",
-        "companyContext": "Legal Operations & High-Volume Case Management",
-        "companyLanguage": "1000+ simultaneous legal files. Litigation workflow automation. Paralegal team scale & data integrity.",
+        "duration": "Feb 2014 - Feb 2021",
         "bullets": [
-          "Spearheaded daily operations of high-volume QLAW case management platform, processing 1000+ simultaneous legal files with 99%+ accuracy on complex litigation documents.",
-          "Audited legacy workflows and systematically automated manual batching, printing, and tracking—compressing 72-hour human management cycles into 5-hour automated runtime loops (14.4x velocity improvement).",
-          "Supervised multi-disciplinary paralegal teams (internal & outsourced across Western regions), maintaining absolute data integrity across thousands of legal summons, complaints, and discovery files.",
-          "Scaled operations team from 0→15+ people while maintaining service quality, team development, and operational consistency across multi-site legal operations.",
-          "Owned end-to-end legal discovery and filing operations—complaints, motions, discovery requests/responses, judgments, default filings. Maintained 99%+ accuracy on all litigation documents.",
-          "Developed and published Standard Operating Procedures (SOPs) that strengthened consistency across multi-site department functions and paralegal training programs."
+          "Supervised 15+ legal staff across two regional locations. Built team from ground up and maintained consistency across both sites.",
+          "Designed and implemented SOPs that became department standard. Reduced errors and improved speed on every major workflow.",
+          "Handled all legal discovery and filing work—complaints, motions, responses, judgments. Maintained 99%+ accuracy on complex litigation documents.",
+          "Built training programs for multi-department teams. Taught 50+ staff members company-wide processes and standards.",
+          "Managed large portfolios of accounts. Ensured audit-ready records, accurate reporting, and full regulatory compliance."
+        ]
+      },
+      {
+        "role": "Permit & Compliance Specialist",
+        "company": "CO2 Monitoring LLC",
+        "duration": "Mar 2021 - Oct 2023",
+        "bullets": [
+          "Managed multi-jurisdiction permitting workflows across California and Nevada (eFileCA, eFileNV, CERS, Accela, LAFD portals).",
+          "Translated complex government regulations into operational procedures and trained team members on compliance requirements.",
+          "Created comprehensive site boundary documentation and operational requirement mapping in Visio and database systems.",
+          "Reduced compliance errors by standardizing workflows and documentation across all projects."
         ]
       }
     ],
     "technical": [
       {
-        "area": "Languages & Frameworks",
-        "items": "TypeScript, JavaScript (ES6+), React, Next.js 15, Node.js, Tailwind CSS, HTML5/CSS3"
-      },
-      {
-        "area": "Systems & Automation",
-        "items": "Linux/Unix Administration, Bash/Shell Scripting, VS Code Extension API, data validation pipelines"
-      },
-      {
-        "area": "Legal & Compliance Platforms",
-        "items": "Odyssey, Rapid Legal, Q-Law, CERS, Accela, eFileCA, eFileNV, LAFD CUPA"
-      },
-      {
-        "area": "Data & Visualization",
-        "items": "Recharts, relational databases, data validation pipelines, Arduino hardware integration"
-      }
-    ]
-  },
-  "education": {
-    "certifications": [
-      {
-        "title": "Certified Software Engineering Professional (CSEP)",
-        "institution": "UNLV / Institute of Data",
-        "year": "2025"
-      },
-      {
-        "title": "Specialized Certificate in Unix System Administration",
-        "institution": "University of California, San Diego",
-        "year": "2013"
+        "area": "Core Skills",
+        "items": "TypeScript, Next.js, React, Bash scripting, Unix systems, SQL"
       }
     ]
   }

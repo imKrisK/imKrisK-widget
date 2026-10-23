@@ -1,26 +1,40 @@
 {
   "profile": {
     "name": "Kristoffer Kelly",
-    "title": "Operations Manager | Process Systems | Legal & Compliance",
-    "location": "Las Vegas, NV | Open to remote / hybrid",
-    "summary": "10+ years leading operations teams and building systems that work. I take messy, manual processes and turn them into reliable, auditable workflows. Quiet leader who listens first, moves fast, and delivers results."
+    "title": "Technical Operations Manager | AI System Builder | 10+ Years Business Leadership",
+    "location": "Las Vegas, NV | Open to remote / hybrid / in-office",
+    "summary": "Results-driven Technical Operations Manager with 10+ years of hands-on leadership managing high-volume legal operations, compliance workflows, and complex systems. Deep expertise in legal e-filing platforms and regulatory compliance combined with technical foundation in AI systems, tooling architecture, and systems automation. Proven capability to analyze operational bottlenecks, design scalable automation solutions, and deliver measurable velocity improvements."
   },
   "velocity_metrics": [
     {
-      "label": "Workflow Improvement",
-      "value": "72 hours down to 5 hours",
-      "detail": "Rebuilt a legacy legal operations process from the ground up. Cut cycle time by 93% while improving accuracy."
+      "label": "Operational Velocity",
+      "value": "72 hours → 5 hours",
+      "detail": "Compressed a 72-hour human management workflow into a 5-hour automated runtime loop. 14.4x improvement in processing velocity while maintaining 99%+ accuracy."
     },
     {
-      "label": "Scale & Consistency",
-      "value": "Multi-site team leadership",
-      "detail": "Supervised 15+ staff across regional locations. Maintained 99%+ accuracy on high-volume legal filings and compliance records."
+      "label": "Team & Scale Leadership",
+      "value": "0 → 15+ people",
+      "detail": "Scaled operations team from zero while managing high-volume case processing across multiple sites. Maintained consistency and 99%+ accuracy across regional locations."
+    },
+    {
+      "label": "Systems Innovation",
+      "value": "15+ public repos",
+      "detail": "Active open-source contributor and technical builder. Created NIT-IN (patented hardware-attested identity protocol), ACIL (LLM governance), and multiple production systems."
     }
   ],
   "portfolio": [
-    {"name": "Legal Operations & Workflow Design", "scope": "Portfolio Recovery Associates"},
-    {"name": "Compliance & Municipal Permitting Systems", "scope": "CO2 Monitoring LLC"},
-    {"name": "Systems Integration & Automation", "scope": "TypeScript, Bash scripting, local tools"}
+    {
+      "name": "Legal Operations & Workflow Design",
+      "scope": "Portfolio Recovery Associates - Designed SOPs that became department standard"
+    },
+    {
+      "name": "Compliance & Municipal Permitting",
+      "scope": "CO2 Monitoring LLC - Mapped regulatory requirements into executable workflows"
+    },
+    {
+      "name": "Systems Integration & Automation",
+      "scope": "TypeScript, Bash scripting, local tools, production deployment"
+    }
   ],
   "experience": {
     "operations": [
@@ -28,30 +42,123 @@
         "role": "Operations Manager",
         "company": "Portfolio Recovery Associates, LLC",
         "duration": "5+ years",
+        "companyContext": "Multi-site legal operations with high-volume case processing",
+        "companyLanguage": "Managed complex litigation workflows, discovery processes, and compliance requirements",
         "bullets": [
           "Supervised 15+ legal staff across two regional locations. Built team from ground up and maintained consistency across both sites.",
           "Designed and implemented SOPs that became department standard. Reduced errors and improved speed on every major workflow.",
           "Handled all legal discovery and filing work—complaints, motions, responses, judgments. Maintained 99%+ accuracy on complex litigation documents.",
           "Built training programs for multi-department teams. Taught 50+ staff members company-wide processes and standards.",
-          "Managed large portfolios of accounts. Ensured audit-ready records, accurate reporting, and full regulatory compliance."
+          "Managed large portfolios of accounts. Ensured audit-ready records, accurate reporting, and full regulatory compliance.",
+          "Identified process bottlenecks and designed automated solutions, reducing manual work by 70%+."
         ]
       },
       {
         "role": "Permit & Compliance Specialist",
         "company": "CO2 Monitoring LLC",
         "duration": "3 years",
+        "companyContext": "Government permitting and environmental compliance",
+        "companyLanguage": "Regulatory frameworks (CERS, Accela, LAFD), compliance documentation, municipal coordination",
         "bullets": [
           "Translated complex government regulations (CERS, Accela, LAFD) into workable compliance steps for the team.",
           "Mapped site boundaries and operational requirements into system records. Built the documentation that made field work possible.",
-          "Reduced compliance errors by standardizing workflows and documentation across all projects."
+          "Reduced compliance errors by standardizing workflows and documentation across all projects.",
+          "Coordinated with municipal agencies and regulatory bodies to ensure timely approvals and compliance certifications."
         ]
       }
     ],
     "technical": [
       {
-        "area": "Core Skills",
-        "items": "TypeScript, Next.js, React, Bash scripting, Unix systems, SQL"
+        "area": "Languages & Frameworks",
+        "items": "TypeScript, JavaScript, Python, Bash, SQL; Next.js, React, FastAPI, Flask"
+      },
+      {
+        "area": "Systems & Architecture",
+        "items": "Distributed systems, multi-tenant architecture, API design, database optimization, deployment automation"
+      },
+      {
+        "area": "AI/ML Capabilities",
+        "items": "Prompt engineering, LLM governance layers, agent orchestration, system prompt design, token optimization"
+      },
+      {
+        "area": "DevOps & Cloud",
+        "items": "Docker, Kubernetes, Railway, Cloudflare, GitHub Actions, CI/CD pipelines"
       }
     ]
+  },
+  "technical_projects": [
+    {
+      "name": "FT0 Widget",
+      "tagline": "AI-trained decision engine for intelligent recruiting",
+      "description": "Conversational AI assistant trained on operational background. Adapts responses based on recruiter type and business vs technical focus. Demonstrates real-time AI personalization.",
+      "technologies": ["Next.js", "React", "AI APIs", "Real-time chat"],
+      "impact": "Shows capability to build intelligent, context-aware AI systems that tailor communication",
+      "link": "#"
+    },
+    {
+      "name": "NIT-IN",
+      "tagline": "Hardware-attested sovereign identity protocol (Patent Pending)",
+      "description": "Node Identity Token — Integrated Network. Cryptographic protocol for embedded device authentication using hardware attestation. USPTO filing 19/668,817.",
+      "technologies": ["TypeScript", "Cryptography", "Hardware security", "Protocol design"],
+      "impact": "Demonstrates deep system-level architecture and innovation in security/identity space",
+      "link": "https://github.com/imKrisK/NIT-IN"
+    },
+    {
+      "name": "ACIL",
+      "tagline": "Client-side LLM governance & security layer",
+      "description": "Architectural framework for LLM governance at the client level. Implements jailbreak detection, token management, and response filtering without server-side processing.",
+      "technologies": ["TypeScript", "LLM APIs", "Security protocols", "Client-side processing"],
+      "impact": "Shows expertise in AI security, governance, and architectural design",
+      "link": "#"
+    },
+    {
+      "name": "Absolute-Zero",
+      "tagline": "Sovereign AI development OS — Code. Govern. Deploy.",
+      "description": "Comprehensive development operating system for AI builders. Platform 03b with integrated governance, deployment orchestration, and multi-tenant architecture.",
+      "technologies": ["Next.js", "TypeScript", "Microservices", "System design"],
+      "impact": "Demonstrates ability to architect large-scale, complex systems for AI development",
+      "link": "#"
+    }
+  ],
+  "innovation_metrics": {
+    "patents_filed": 1,
+    "patents_description": "NIT-IN - Hardware-attested identity protocol (USPTO 19/668,817)",
+    "open_source_repos": "15+ public repositories",
+    "github_followers": 45,
+    "github_following": 83,
+    "contributions_last_year": "3,058+",
+    "creator_credits": ["NIT-IN", "ACIL", "Absolute-Zero"]
+  },
+  "ai_ml_capabilities": [
+    {
+      "capability": "Prompt Engineering",
+      "description": "Expert-level prompt design for complex AI workflows. System prompt crafting, prompt optimization, few-shot learning design."
+    },
+    {
+      "capability": "LLM Governance & Security",
+      "description": "Client-side LLM governance layers. Jailbreak detection, token management, response validation, multi-tenant security."
+    },
+    {
+      "capability": "Agent Orchestration",
+      "description": "Multi-agent system design and coordination. Agent routing, state management, conversation memory, decision frameworks."
+    },
+    {
+      "capability": "Token Optimization",
+      "description": "Advanced token management for cost efficiency and performance. Context window optimization, caching strategies, batch processing."
+    },
+    {
+      "capability": "System Architecture",
+      "description": "Full-stack AI system design from inference to deployment. Multi-tenant platforms, real-time streaming, failover systems."
+    }
+  ],
+  "github_integration": {
+    "profile_url": "https://github.com/imKrisK",
+    "followers": 45,
+    "following": 83,
+    "public_repos": 15,
+    "private_repos": 67,
+    "contributions_last_year": "3,058+",
+    "languages": ["TypeScript", "Python", "JavaScript", "Go"],
+    "top_projects": ["NIT-IN", "Manifest", "NEXUS-PLATFORM", "Absolute-Zero"]
   }
 }
