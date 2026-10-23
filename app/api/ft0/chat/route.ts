@@ -190,7 +190,7 @@ export async function POST(req: Request) {
       structuredResponse: structuredResponse,
       recruiterType: recruiterType,
       conversationId,
-      model: data.model || 'ollama-qwen2.5:32b',
+      model: data.model || 'ollama-deepseek-r1:7b',
       conversationMode,
       questionCount: abuseCheck.questionCount,
       remainingQuestions: abuseCheck.remainingQuestions,
@@ -215,8 +215,11 @@ async function callAIModel(
 
   // ========== PRIMARY: Try Ollama (ZERO COST, local) ==========
   // Ollama runs on http://localhost:11434 by default
-  // Models available: qwen2.5:32b (PRIMARY - best quality), deepseek-r1:7b, llama3.2:3b, qwen:latest, llava:7b, deepseek-r1:8b
-  const ollamaModels = ['qwen2.5:32b', 'deepseek-r1:7b']; // Try Qwen2.5 first (better quality)
+  // Models available:
+  //  - deepseek-r1:7b (PRIMARY - reliable, ~5 min response time)
+  //  - qwen2.5:32b (OPTIONAL - better quality but 10+ min cold-start)
+  // Use DeepSeek first for reliability; Qwen2.5 requires warmup via: ollama run qwen2.5:32b
+  const ollamaModels = ['deepseek-r1:7b', 'qwen2.5:32b']; // Try DeepSeek first for reliability
   
   for (const model of ollamaModels) {
     try {
