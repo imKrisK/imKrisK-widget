@@ -220,6 +220,11 @@ async function callAIModel(
   
   for (const model of ollamaModels) {
     try {
+      // Use AbortController for timeout (Qwen2.5 can take 10+ min on first load)
+      const controller = new AbortController();
+      const timeoutMs = model === 'qwen2.5:32b' ? 600000 : 300000; // 10 min for Qwen, 5 min for DeepSeek
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+      
       const response = await fetch('http://localhost:11434/api/chat', {
         method: 'POST',
         headers: {
@@ -235,7 +240,10 @@ async function callAIModel(
           temperature: 0.7,
           stream: false,
         }),
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
