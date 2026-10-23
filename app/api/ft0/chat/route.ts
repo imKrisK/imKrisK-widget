@@ -17,26 +17,30 @@ import { parseMarkdownResponse } from '@/lib/response-formatter';
 import { isArchitectureQuestion, getArchitectureBoundaryResponse } from '@/lib/architecture-boundary';
 
 /**
- * FT0 Chat API Route with Ollama Support
+ * FT0 Chat API Route - Multi-Backend AI Response System
  * 
- * Configuration:
- * - Primary: Ollama (localhost:11434) - ZERO COST
- * - Fallback 1: Manifest API with Haiku 4.5 ($0.80/$2.40 per 1M tokens)
- * - Fallback 2: Claude Haiku API (cost-optimized)
- * - GitHub auth: Personal Access Token (PAT) optional for rate limiting
+ * TIER 1 - LOCAL (FREE):
+ * - Ollama (localhost:11434) - $0 ✅
+ *   • deepseek-r1:7b (recommended - 7.6B reasoning)
+ *   • qwen2.5:32b (powerful - 32.8B, excellent for complex questions)
+ *   • llama3.2:3b (lightweight)
  * 
- * Abuse Prevention:
- * - "open_to_work" mode: Max 5 questions
- * - "hiring" mode: Max 10 questions
- * - Cost tracking per conversation (Ollama = $0, others tracked)
+ * TIER 2 - EDGE (STRUCTURED DECISIONS):
+ * - Cloudflare Workers AI + Clef ($0.24/M tokens) ← NEW
+ *   • clef (2.5x faster, structured yes/no/choice/score answers)
+ *   • clef-flash (13x faster, lightweight decision model)
+ *   • Perfect for: recruiter type detection, routing decisions, scoring
  * 
- * Ollama Models Available:
- * - deepseek-r1:7b (recommended - 7.6B reasoning, 4.6GB)
- * - qwen2.5:32b (powerful - 32.8B parameters, 19.8GB)
- * - llama3.2:3b (lightweight - 3.2B, 2.0GB)
- * - qwen:latest (compact - 4B, 2.3GB)
- * - llava:7b (vision-capable - 7B, 4.7GB)
- * - deepseek-r1:8b (reasoning - 8.2B, 5.2GB)
+ * TIER 3 - CLOUD (FULL RESPONSE):
+ * - Manifest API with Haiku 4.5 ($0.80/$2.40 per 1M tokens)
+ * - Claude Haiku API (cost-optimized)
+ * 
+ * Environment Variables:
+ * - MANIFEST_API_KEY (production-grade, recommended)
+ * - CLAUDE_API_KEY (alternative)
+ * - CLOUDFLARE_API_TOKEN (for Workers AI + Clef)
+ * - CLOUDFLARE_ACCOUNT_ID (for Workers AI + Clef)
+ * - GITHUB_TOKEN (optional, for rate limiting)
  */
 export async function POST(req: Request) {
   try {
@@ -149,7 +153,7 @@ export async function POST(req: Request) {
     }
 
     // Call AI model with Ollama as primary (ZERO COST)
-    const response = await callAIModel(userMessagesOnly, recruiterType);
+    const response = await callAIModel(userMessagesOnly, recruiterType, userText);
 
     if (!response.ok) {
       console.error('AI model error:', response.statusText);
@@ -207,7 +211,8 @@ export async function POST(req: Request) {
 
 async function callAIModel(
   messages: Array<{ role: string; content: string }>,
-  recruiterType: string
+  recruiterType: string,
+  userText: string
 ): Promise<Response> {
   const manifestApiKey = process.env.MANIFEST_API_KEY;
   const claudeApiKey = process.env.CLAUDE_API_KEY;
@@ -215,37 +220,50 @@ async function callAIModel(
 
   // ========== PRIMARY: Try Ollama (ZERO COST, local) ==========
   // Ollama runs on http://localhost:11434 by default
-  // Models available: deepseek-r1:7b (recommended), qwen2.5:32b, llama3.2:3b, qwen:latest, llava:7b, deepseek-r1:8b
-  try {
-    const response = await fetch('http://localhost:11434/api/chat', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'deepseek-r1:7b',
-        messages: messages.map(msg => ({
-          role: msg.role,
-          content: msg.content,
-        })).filter(msg => msg.role !== 'system'),
-        system: messages.find(msg => msg.role === 'system')?.content || '',
-        temperature: 0.7,
-        stream: false,
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('[Ollama] Successfully used local Ollama for response');
-      return Response.json({
-        content: data.message?.content || data.response || 'No response',
-        model: 'ollama-deepseek-r1:7b',
+  // Models available: 
+  // - qwen2.5:32b (BEST: 32.8B parameters, excellent reasoning for complex questions)
+  // - deepseek-r1:7b (recommended: 7.6B reasoning model, balanced)
+  // - llama3.2:3b (lightweight - 3.2B, 2.0GB)
+  // - qwen:latest (compact - 4B, 2.3GB)
+  // - llava:7b (vision-capable - 7B, 4.7GB)
+  
+  // Try Qwen2.5:32b first (best for recruiter interactions), fall back to deepseek-r1:7b
+  const ollamaModels = ['qwen2.5:32b', 'deepseek-r1:7b'];
+  
+  for (const model of ollamaModels) {
+    try {
+      const response = await fetch('http://localhost:11434/api/chat', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: messages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+          })).filter(msg => msg.role !== 'system'),
+          system: messages.find(msg => msg.role === 'system')?.content || '',
+          temperature: 0.7,
+          stream: false,
+        }),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`[Ollama] Successfully used local Ollama (${model}) for response`);
+        return Response.json({
+          content: data.message?.content || data.response || 'No response',
+          model: `ollama-${model}`,
+        });
+      }
+    } catch (error) {
+      console.warn(`[Ollama] Model ${model} not available or connection failed`);
     }
-    console.warn('[Ollama] Connection failed, status:', response.status);
-  } catch (error) {
-    console.warn('[Ollama] Not available (expected if not running):', (error as Error).message);
   }
+  
+  console.warn('[Ollama] No models available on local Ollama');
+
 
   // ========== FALLBACK 1: Try Manifest API with Haiku 4.5 ==========
   if (manifestApiKey) {
@@ -282,7 +300,59 @@ async function callAIModel(
     }
   }
 
-  // ========== FALLBACK 2: Claude API with Haiku 4.5 ==========
+  // ========== FALLBACK 2: Cloudflare Workers AI + Clef (STRUCTURED DECISIONS) ==========
+  const cloudflareToken = process.env.CLOUDFLARE_API_TOKEN;
+  const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  
+  if (cloudflareToken && cloudflareAccountId) {
+    try {
+      const response = await fetch(
+        `https://api.cloudflare.com/client/v4/accounts/${cloudflareAccountId}/ai/run/@cf/meta/clef`,
+        {
+          method: 'POST',
+          headers: {
+            'authorization': `Bearer ${cloudflareToken}`,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            state: {
+              context: userText,
+              conversation_history: messages.slice(-5).map(m => `${m.role}: ${m.content}`).join('\n'),
+            },
+            questions: [
+              {
+                type: 'choice',
+                question: 'What is the recruiter asking about?',
+                choices: ['operations', 'technical', 'hiring', 'candidate_seeking_advice'],
+              },
+              {
+                type: 'noul',
+                question: 'Is this a hiring/recruitment question?',
+              },
+              {
+                type: 'score',
+                question: 'Rate the question complexity',
+                rubric: ['simple (1-2 words)', 'moderate (short question)', 'complex (multi-part)'],
+              },
+            ],
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('[Cloudflare Clef] Decision model used for routing');
+        // Clef returns structured decisions, fall through to Claude/Manifest for full response
+        // But we can use Clef's output to optimize the routing
+        const clefDecisions = data.result?.output?.[0] || {};
+        console.log('[Cloudflare Clef] Decisions:', clefDecisions);
+      }
+    } catch (error) {
+      console.warn('[Cloudflare Clef] Error:', (error as Error).message);
+    }
+  }
+
+  // ========== FALLBACK 3: Claude API with Haiku 4.5 ==========
   if (claudeApiKey) {
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -324,14 +394,22 @@ async function callAIModel(
         'I need to be configured to respond.\n\n' +
         '🏠 LOCAL DEVELOPMENT:\n' +
         '  1. Start Ollama: `ollama serve`\n' +
-        '  2. Pull a model: `ollama pull deepseek-r1:7b`\n' +
-        '  3. Reload the widget\n\n' +
+        '  2. Pull Qwen2.5 (RECOMMENDED): `ollama pull qwen2.5:32b`\n' +
+        '  3. Or pull deepseek: `ollama pull deepseek-r1:7b`\n' +
+        '  4. Reload the widget\n\n' +
         '☁️ PRODUCTION (Railway):\n' +
-        '  Set MANIFEST_API_KEY or CLAUDE_API_KEY in environment variables\n\n' +
+        '  OPTION 1 (Recommended):\n' +
+        '    Set MANIFEST_API_KEY\n' +
+        '  OPTION 2 (Structured Decisions):\n' +
+        '    Set CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID\n' +
+        '  OPTION 3:\n' +
+        '    Set CLAUDE_API_KEY\n\n' +
         '📊 COST COMPARISON:\n' +
-        '  • Ollama (local): $0.00 ✅\n' +
-        '  • Manifest API: $0.00-0.41/month\n' +
-        '  • Claude API: $0.00-0.41/month\n\n' +
+        '  • Ollama (local, Qwen2.5): $0.00 ✅ (Best)\n' +
+        '  • Cloudflare Clef-flash: $0.09/M tokens (Edge, structured)\n' +
+        '  • Cloudflare Clef: $0.24/M tokens (Accurate decisions)\n' +
+        '  • Manifest API: $0.80/$2.40 per 1M tokens\n' +
+        '  • Claude API: $0.80/$2.40 per 1M tokens\n\n' +
         '❓ Questions? Visit: https://github.com/imKrisK/imKrisK-widget',
     },
     { status: 200 }
