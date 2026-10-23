@@ -5,22 +5,54 @@
     "location": "Las Vegas, NV | Open to remote / hybrid",
     "summary": "10+ years leading operations teams and building systems that work. I take messy, manual processes and turn them into reliable, auditable workflows. Quiet leader who listens first, moves fast, and delivers results."
   },
-  "velocity_metrics": [
-    {
-      "label": "Workflow Improvement",
-      "value": "72 hours down to 5 hours",
-      "detail": "Rebuilt a legacy legal operations process from the ground up. Cut cycle time by 93% while improving accuracy."
+  "business_operations": {
+    "headline": "Building Systems. Leading Teams. Staying to Scale Them.",
+    "cover_letter": "I'm not looking for the exit. I'm looking for the escalator.\n\nFor 10+ years, I've taken messy, manual operations—data entry, compliance workflows, multi-jurisdictional permitting—and turned them into reliable, auditable systems. I've supervised teams, built SOPs that became department standards, and maintained 99%+ accuracy on high-volume legal filings.\n\nMy next chapter: **Data Moderator → Chat Customer Service → Chat Moderator → Chat Developer**. That's not a sprint. That's a 5-10 year commitment to understand your data loop, master it, and build the modern systems that scale it.\n\nWith my CSEP credential, I bring not just operations expertise—I bring a permanent performance upgrade. I'm here to stay and deliver compounding value.",
+    "core_competencies": [
+      {
+        "area": "Workflow & Process Design",
+        "examples": "93% cycle-time reduction, SOP standardization, multi-site consistency"
+      },
+      {
+        "area": "Compliance & Permitting",
+        "examples": "CERS, Accela, LAFD, multi-jurisdictional regulatory navigation, audit-ready documentation"
+      },
+      {
+        "area": "Team Leadership & Scaling",
+        "examples": "Supervised 15+ staff across regional locations, built training programs, maintained 99%+ accuracy"
+      },
+      {
+        "area": "Data & Systems Integration",
+        "examples": "Invoice processing, portfolio management, document control, workflow automation"
+      }
+    ],
+    "career_path": {
+      "current": {
+        "level": "Data Moderator & Operations Foundation",
+        "description": "Master the 30/60/90: Days 1-30 (learn the SOP), Days 31-60 (spot inefficiencies), Days 61-90 (pitch the upgrade). This is ground-level expertise."
+      },
+      "progression": [
+        {
+          "level": "Chat Customer Service",
+          "description": "Move from backend operations to front-line customer interaction. Understand the human loop, not just the workflow."
+        },
+        {
+          "level": "Chat Moderator",
+          "description": "Quality control and content governance. Apply operations discipline to customer experience. Spot patterns, enforce consistency, scale culture."
+        },
+        {
+          "level": "Chat Developer",
+          "description": "Bridge the gap. Automate the moderation layer with the same rigor I've applied to legal operations. Build modern systems for a modern department."
+        }
+      ]
     },
-    {
-      "label": "Scale & Consistency",
-      "value": "Multi-site team leadership",
-      "detail": "Supervised 15+ staff across regional locations. Maintained 99%+ accuracy on high-volume legal filings and compliance records."
-    }
-  ],
+    "csep_value": "My CSEP credential isn't a bridge to leave operations—it's a lever to upgrade how we execute it. Combined with 10+ years of hands-on operations, it signals that I'm not a job-hopper. I'm a builder who understands both the business rules and the technical constraints, and I'm committed to fixing what breaks at scale."
+  },
   "portfolio": [
-    {"name": "Legal Operations & Workflow Design", "scope": "Portfolio Recovery Associates"},
-    {"name": "Compliance & Municipal Permitting Systems", "scope": "CO2 Monitoring LLC"},
-    {"name": "Systems Integration & Automation", "scope": "TypeScript, Bash scripting, local tools"}
+    {"name": "Legal Operations & Workflow Pipeline", "scope": "Portfolio Recovery Associates", "isVisualized": true},
+    {"name": "FT0 Widget", "scope": "AI-powered recruiter assistant with profile context awareness", "link": "https://imkrisk-widget-production.up.railway.app"},
+    {"name": "ABSOLUTE-ZERO: Live Decision Engine", "scope": "Real-time decision intelligence system with data-driven workflows", "link": "#"},
+    {"name": "Compliance & Municipal Permitting Systems", "scope": "CO2 Monitoring LLC"}
   ],
   "experience": {
     "operations": [

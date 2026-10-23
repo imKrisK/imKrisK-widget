@@ -10,7 +10,26 @@ interface ProfileData {
     location: string;
     summary: string;
   };
-  velocity_metrics: Array<{
+  business_operations?: {
+    headline: string;
+    cover_letter: string;
+    core_competencies: Array<{
+      area: string;
+      examples: string;
+    }>;
+    career_path: {
+      current: {
+        level: string;
+        description: string;
+      };
+      progression: Array<{
+        level: string;
+        description: string;
+      }>;
+    };
+    csep_value: string;
+  };
+  velocity_metrics?: Array<{
     label: string;
     value: string;
     detail: string;
@@ -18,6 +37,8 @@ interface ProfileData {
   portfolio: Array<{
     name: string;
     scope: string;
+    isVisualized?: boolean;
+    link?: string;
   }>;
   experience: {
     operations: Array<{
@@ -111,19 +132,21 @@ export default function Portfolio({ profileType = 'operations' }: Props) {
         </div>
       </header>
 
-      {/* Velocity Metrics */}
-      <section className={styles.metrics}>
-        <h2>Velocity Metrics</h2>
-        <div className={styles.metricsGrid}>
-          {data.velocity_metrics.map((metric, idx) => (
-            <div key={idx} className={styles.metricCard}>
-              <p className={styles.metricLabel}>{metric.label}</p>
-              <p className={styles.metricValue}>{metric.value}</p>
-              <p className={styles.metricDetail}>{metric.detail}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Velocity Metrics - Only show if present */}
+      {data.velocity_metrics && data.velocity_metrics.length > 0 && (
+        <section className={styles.metrics}>
+          <h2>Velocity Metrics</h2>
+          <div className={styles.metricsGrid}>
+            {data.velocity_metrics.map((metric, idx) => (
+              <div key={idx} className={styles.metricCard}>
+                <p className={styles.metricLabel}>{metric.label}</p>
+                <p className={styles.metricValue}>{metric.value}</p>
+                <p className={styles.metricDetail}>{metric.detail}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Tabs */}
       <div className={styles.tabContainer}>
@@ -161,31 +184,108 @@ export default function Portfolio({ profileType = 'operations' }: Props) {
           {/* Business Operations Tab */}
           {activeTab === 'business' && (
             <div className={styles.contentSection}>
-              <h2>Professional Experience</h2>
-              {data.experience.operations.map((exp, idx) => (
-                <div key={idx} className={styles.experienceCard}>
-                  <div className={styles.expHeader}>
-                    <h3>{exp.role}</h3>
-                    <span className={styles.company}>{exp.company}</span>
-                  </div>
-                  <p className={styles.duration}>{exp.duration}</p>
-                  {exp.companyContext && (
-                    <div className={styles.companyContext}>
-                      <p className={styles.contextLabel}>{exp.companyContext}</p>
+              {data.business_operations ? (() => {
+                const bo = data.business_operations;
+                return (
+                  <>
+                    {/* Career Narrative */}
+                    <div className={styles.narrativeSection}>
+                      <h2>{bo.headline}</h2>
+                      <div className={styles.coverLetter}>
+                        {bo.cover_letter.split('\n').map((line, idx) => (
+                          <p key={idx}>{line}</p>
+                        ))}
+                      </div>
                     </div>
-                  )}
-                  {exp.companyLanguage && (
-                    <div className={styles.companyLanguage}>
-                      <p>{exp.companyLanguage}</p>
+
+                    {/* Core Competencies */}
+                    <div className={styles.competenciesSection}>
+                      <h3>Core Competencies</h3>
+                      <div className={styles.competenciesGrid}>
+                        {bo.core_competencies.map((comp, idx) => (
+                          <div key={idx} className={styles.competencyCard}>
+                            <h4>{comp.area}</h4>
+                            <p>{comp.examples}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  )}
-                  <ul className={styles.bullets}>
-                    {exp.bullets.map((bullet, bidx) => (
-                      <li key={bidx}>{bullet}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+
+                    {/* Career Path */}
+                    <div className={styles.careerPathSection}>
+                      <h3>Career Progression Path</h3>
+                      
+                      <div className={styles.currentRoleCard}>
+                        <div className={styles.roleMarker}>Current Foundation</div>
+                        <h4>{bo.career_path.current.level}</h4>
+                        <p>{bo.career_path.current.description}</p>
+                      </div>
+
+                      <div className={styles.progressionArrow}>↓</div>
+
+                      <div className={styles.progressionSteps}>
+                        {bo.career_path.progression.map((step, idx) => (
+                          <div key={idx} className={styles.progressionCard}>
+                            <div className={styles.stepNumber}>{idx + 1}</div>
+                            <div className={styles.stepContent}>
+                              <h4>{step.level}</h4>
+                              <p>{step.description}</p>
+                            </div>
+                            {idx < bo.career_path.progression.length - 1 && (
+                              <div className={styles.stepArrow}>↓</div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CSEP Value */}
+                    <div className={styles.csepSection}>
+                      <h3>Why CSEP Matters</h3>
+                      <div className={styles.csepCard}>
+                        <p>{bo.csep_value}</p>
+                      </div>
+                    </div>
+
+                    {/* Experience History */}
+                    <div className={styles.experienceHistorySection}>
+                      <h3 style={{ marginTop: '40px' }}>Professional Background</h3>
+                      {data.experience.operations.map((exp, idx) => (
+                        <div key={idx} className={styles.experienceCard}>
+                          <div className={styles.expHeader}>
+                            <h4>{exp.role}</h4>
+                            <span className={styles.company}>{exp.company}</span>
+                          </div>
+                          <p className={styles.duration}>{exp.duration}</p>
+                          <ul className={styles.bullets}>
+                            {exp.bullets.map((bullet, bidx) => (
+                              <li key={bidx}>{bullet}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                );
+              })() : (
+                <>
+                  <h2>Professional Experience</h2>
+                  {data.experience.operations.map((exp, idx) => (
+                    <div key={idx} className={styles.experienceCard}>
+                      <div className={styles.expHeader}>
+                        <h3>{exp.role}</h3>
+                        <span className={styles.company}>{exp.company}</span>
+                      </div>
+                      <p className={styles.duration}>{exp.duration}</p>
+                      <ul className={styles.bullets}>
+                        {exp.bullets.map((bullet, bidx) => (
+                          <li key={bidx}>{bullet}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           )}
 
@@ -203,13 +303,21 @@ export default function Portfolio({ profileType = 'operations' }: Props) {
               </div>
 
               <h3 style={{ marginTop: '32px', marginBottom: '16px' }}>
-                Notable Projects
+                Notable Projects & Systems
               </h3>
               <div className={styles.projectsGrid}>
                 {data.portfolio.map((project, idx) => (
                   <div key={idx} className={styles.projectCard}>
                     <h4>{project.name}</h4>
                     <p className={styles.projectScope}>{project.scope}</p>
+                    {project.isVisualized && (
+                      <p className={styles.projectNote}>📊 Pipeline Architecture Visualization</p>
+                    )}
+                    {project.link && project.link !== '#' && (
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.projectCardLink}>
+                        Visit →
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
