@@ -33,6 +33,27 @@ interface ProfileData {
       items: string;
     }>;
   };
+  technical_projects?: Array<{
+    name: string;
+    tagline: string;
+    description: string;
+    technologies: string[];
+    impact: string;
+    link?: string;
+  }>;
+  ai_ml_capabilities?: Array<{
+    capability: string;
+    description: string;
+  }>;
+  innovation_metrics?: {
+    patents_filed: number;
+    patents_description: string;
+    open_source_repos: string;
+    github_followers: number;
+    github_following: number;
+    contributions_last_year: string;
+    creator_credits: string[];
+  };
 }
 
 export default function Portfolio() {
@@ -115,10 +136,25 @@ export default function Portfolio() {
           >
             Technical Credentials
           </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'innovation' ? styles.active : ''}`}
+            onClick={() => setActiveTab('innovation')}
+          >
+            Technical Innovation
+          </button>
+          {data.ai_ml_capabilities && (
+            <button
+              className={`${styles.tab} ${activeTab === 'ai' ? styles.active : ''}`}
+              onClick={() => setActiveTab('ai')}
+            >
+              AI/ML Capabilities
+            </button>
+          )}
         </div>
 
         {/* Tab Content */}
         <div className={styles.tabContent}>
+          {/* Business Operations Tab */}
           {activeTab === 'business' && (
             <div className={styles.contentSection}>
               <h2>Professional Experience</h2>
@@ -149,6 +185,7 @@ export default function Portfolio() {
             </div>
           )}
 
+          {/* Technical Credentials Tab */}
           {activeTab === 'technical' && (
             <div className={styles.contentSection}>
               <h2>Technical Skills & Credentials</h2>
@@ -174,12 +211,96 @@ export default function Portfolio() {
               </div>
             </div>
           )}
+
+          {/* Technical Innovation Tab */}
+          {activeTab === 'innovation' && data.technical_projects && (
+            <div className={styles.contentSection}>
+              <h2>Technical Innovation Projects</h2>
+              <div className={styles.projectsDetailGrid}>
+                {data.technical_projects.map((project, idx) => (
+                  <div key={idx} className={styles.projectDetailCard}>
+                    <h3>{project.name}</h3>
+                    <p className={styles.projectTagline}>{project.tagline}</p>
+                    <p className={styles.projectDescription}>{project.description}</p>
+                    
+                    <div className={styles.technologies}>
+                      {project.technologies.map((tech, tidx) => (
+                        <span key={tidx} className={styles.techTag}>{tech}</span>
+                      ))}
+                    </div>
+                    
+                    <p className={styles.projectImpact}>
+                      <strong>Impact:</strong> {project.impact}
+                    </p>
+                    
+                    {project.link && project.link !== '#' && (
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
+                        View Project →
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {data.innovation_metrics && (
+                <div className={styles.metricsSection}>
+                  <h3 style={{ marginTop: '32px' }}>Innovation Metrics</h3>
+                  <div className={styles.metricsCards}>
+                    <div className={styles.metricBox}>
+                      <p className={styles.metricNumber}>{data.innovation_metrics.patents_filed}</p>
+                      <p className={styles.metricLabel}>Patents Filed</p>
+                      <p className={styles.metricSub}>{data.innovation_metrics.patents_description}</p>
+                    </div>
+                    <div className={styles.metricBox}>
+                      <p className={styles.metricNumber}>{data.innovation_metrics.open_source_repos}</p>
+                      <p className={styles.metricLabel}>Open Source</p>
+                      <p className={styles.metricSub}>Public repositories on GitHub</p>
+                    </div>
+                    <div className={styles.metricBox}>
+                      <p className={styles.metricNumber}>{data.innovation_metrics.contributions_last_year}</p>
+                      <p className={styles.metricLabel}>Contributions</p>
+                      <p className={styles.metricSub}>Past 12 months of activity</p>
+                    </div>
+                    <div className={styles.metricBox}>
+                      <p className={styles.metricNumber}>{data.innovation_metrics.github_followers}</p>
+                      <p className={styles.metricLabel}>Community</p>
+                      <p className={styles.metricSub}>GitHub followers & supporters</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* AI/ML Capabilities Tab */}
+          {activeTab === 'ai' && data.ai_ml_capabilities && (
+            <div className={styles.contentSection}>
+              <h2>AI/ML Capabilities & Expertise</h2>
+              <div className={styles.capabilitiesGrid}>
+                {data.ai_ml_capabilities.map((cap, idx) => (
+                  <div key={idx} className={styles.capabilityCard}>
+                    <h3>{cap.capability}</h3>
+                    <p>{cap.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.aiNoteSection}>
+                <h3 style={{ marginTop: '32px' }}>About FT0</h3>
+                <p>
+                  This portfolio site demonstrates real-time AI personalization through the FT0 widget on the right side. 
+                  FT0 is trained on this background and adapts responses based on recruiter type (operations vs technical) 
+                  and conversation context. It showcases practical AI implementation in a business context.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <p>This is my resume. I am a human who is open to work.</p>
+        <p>This is my resume. I am a human who is open to work. Explore my technical background, operations expertise, and AI innovation work above.</p>
       </footer>
     </div>
   );
