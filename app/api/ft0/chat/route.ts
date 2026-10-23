@@ -190,7 +190,7 @@ export async function POST(req: Request) {
       structuredResponse: structuredResponse,
       recruiterType: recruiterType,
       conversationId,
-      model: data.model || 'ollama-deepseek-r1:7b',
+      model: data.model || 'ollama-qwen2.5:32b',
       conversationMode,
       questionCount: abuseCheck.questionCount,
       remainingQuestions: abuseCheck.remainingQuestions,
